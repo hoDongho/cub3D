@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 15:49:15 by yehyun            #+#    #+#             */
-/*   Updated: 2022/09/27 10:04:57 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/05 10:04:09 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,6 @@ int	check_and_make_map(t_info *info, int fd)
 		add_list(&info->map, tmp, cnt);
 	}
 	if (check_map(info->map, 0) == ERROR)
-	{
-		delete_dlist(info->map);
 		return (puterr_msg("map error!"));
-	}
 	return (0);
 }

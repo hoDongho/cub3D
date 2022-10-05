@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:10 by yehyun            #+#    #+#             */
-/*   Updated: 2022/09/27 10:04:54 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/05 10:11:17 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,9 @@ int	parsing_map(t_info *info, char *filename)
 	int	fd;
 
 	fd = check_file(filename);
-	if (fd == ERROR)
-		return (ERROR);
-	if (check_basic(info, fd) == ERROR && !close(fd))
-		return (ERROR);
+	check_basic(info, fd);
 	cali_info(info);
-	if (check_and_make_map(info, fd) == ERROR && !close(fd))
-		return (ERROR);
+	check_and_make_map(info, fd);
 	close(fd);
 	return (0);
 }
