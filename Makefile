@@ -6,7 +6,7 @@
 #    By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 15:49:02 by yehyun            #+#    #+#              #
-#    Updated: 2022/09/27 08:54:35 by yehyun           ###   ########seoul.kr   #
+#    Updated: 2022/10/05 10:43:08 by yehyun           ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ LIBDIR = libft/
 SRC_DIR = srcs/
 SRC_BONUS_DIR = srcs_bonus/
 
-SRC = main.c parser.c utils.c parser_utils.c doubly_list.c map.c
+SRC =	main.c parser.c utils.c parser_utils.c doubly_list.c map.c\
+		game.c key.c
 SRC_BONUS = 
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))

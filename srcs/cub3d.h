@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:17 by yehyun            #+#    #+#             */
-/*   Updated: 2022/09/27 10:06:29 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/05 10:44:02 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,20 @@
 # define C_OPEN 10
 # define C_CLOSE 11
 
+# define PRESS 2
+# define KEY_W 13
+# define KEY_A 0
+# define KEY_S 1
+# define KEY_D 2
+# define KEY_ESC 53
+# define RED_BUTTON 17
+
 # include <stdio.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
+# include <mlx.h>
 # include "../libft/libft.h"
 
 typedef struct s_dlist
@@ -33,6 +42,14 @@ typedef struct s_dlist
 	int				width;
 	int				height;
 }					t_dlist;
+
+typedef struct s_var
+{
+	void	*mlx;
+	void	*win;
+	int		width;
+	int		height;
+}				t_var;
 
 typedef struct s_info
 {
@@ -65,5 +82,12 @@ void	delete_dlist(t_dlist *list);
 
 // map.c
 int		check_and_make_map(t_info *info, int fd);
+
+// game.c
+int		into_game(t_info *info);
+
+// key.c
+int		key_press(int keycode, t_var *var);
+int		exit_hook(t_var *var);
 
 #endif

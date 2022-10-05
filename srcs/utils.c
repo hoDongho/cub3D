@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:28:42 by yehyun            #+#    #+#             */
-/*   Updated: 2022/09/27 10:04:11 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/05 09:47:09 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	puterr_msg(char *str)
 {
 	ft_putendl_fd("Error", 2);
 	ft_putendl_fd(str, 2);
-	return (ERROR);
+	exit(1);
 }
 
 int	free_info(t_info *info)

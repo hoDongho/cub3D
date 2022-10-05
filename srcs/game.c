@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/26 12:16:28 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/05 10:08:49 by yehyun           ###   ########seoul.kr  */
+/*   Created: 2022/10/05 10:08:00 by yehyun            #+#    #+#             */
+/*   Updated: 2022/10/05 10:42:23 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	main(int ac, char **av)
+int	into_game(t_info *info)
 {
-	t_info	info;
+	t_var	var;
 
-	if (ac != 2)
-		return (puterr_msg("arguments error!") + 2);
-	ft_memset(&info, 0, sizeof(t_info));
-	parsing_map(&info, av[1]);
-	into_game(&info);
-	free_info(&info);
+	var.mlx = mlx_init();
+	var.win = mlx_new_window(var.mlx, 1920, 1080, "cub3d");
+	mlx_hook(var.win, PRESS, 0, &key_press, &var);
+	mlx_hook(var.win, RED_BUTTON, 0, &exit_hook, &var);
+	mlx_loop(var.mlx);
+	mlx_destroy_window(var.mlx, var.win);
+	(void)info;
 	return (0);
 }
