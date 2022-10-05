@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:28:42 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/05 09:47:09 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/05 11:12:59 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ char	*gnl_scan(int fd, int flag)
 			free(tmp);
 			return (gnl_scan(fd, flag));
 		}
-		else
-			return (tmp);
+		return (tmp);
 	}
 	if (!tmp || !tmp[0])
 	{

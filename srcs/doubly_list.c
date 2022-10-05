@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:37:15 by yehyun            #+#    #+#             */
-/*   Updated: 2022/09/26 16:52:23 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/05 14:52:56 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,18 @@ void	delete_dlist(t_dlist *list)
 		free(tmp->line);
 		free(tmp);
 	}
+}
+
+int	find_target(t_dlist *list, int x, int y)
+{
+	t_dlist	*tmp;
+	int		i;
+
+	tmp = list;
+	i = 0;
+	while (tmp->height != y)
+		tmp = tmp->next;
+	while (i != x)
+		i++;
+	return (tmp->line[x]);
 }

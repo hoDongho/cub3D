@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/26 12:16:28 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/05 14:10:52 by yehyun           ###   ########seoul.kr  */
+/*   Created: 2022/10/05 11:16:51 by dhyun             #+#    #+#             */
+/*   Updated: 2022/10/05 11:38:47 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	main(int ac, char **av)
+int	trans_color(int r, int g, int b)
 {
-	t_info	info;
+	return (r << 16 | g << 8 | b);
+}
 
-	if (ac != 2)
-		return (puterr_msg("arguments error!") + 2);
-	ft_memset(&info, 0, sizeof(t_info));
-	parsing_map(&info, av[1]);
-	into_game(&info);
-	free_info(&info);
-	return (0);
+int	set_color(char *str)
+{
+	char	**tmp;
+	int		r;
+	int		g;
+	int		b;
+	int		i;
+
+	tmp = ft_split(str, ',');
+	r = ft_atoi(tmp[0]);
+	g = ft_atoi(tmp[1]);
+	b = ft_atoi(tmp[2]);
+	i = -1;
+	while (tmp[++i])
+		free(tmp[i]);
+	free(tmp);
+	return (trans_color(r, g, b));
 }

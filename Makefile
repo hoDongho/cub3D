@@ -6,7 +6,7 @@
 #    By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 15:49:02 by yehyun            #+#    #+#              #
-#    Updated: 2022/10/05 10:43:08 by yehyun           ###   ########seoul.kr   #
+#    Updated: 2022/10/05 16:30:48 by yehyun           ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,8 @@ LIBDIR = libft/
 SRC_DIR = srcs/
 SRC_BONUS_DIR = srcs_bonus/
 
-SRC =	main.c parser.c utils.c parser_utils.c doubly_list.c map.c\
-		game.c key.c
+SRC =	main.c parser.c utils.c parser_utils.c doubly_list.c map.c \
+		game.c key.c color.c
 SRC_BONUS = 
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
@@ -39,7 +39,7 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 	@make -C $(MLXDIR)
 	@make -C $(LIBDIR)
-	@$(CC) $(DFLAG) $(CFLAGS) -L$(MLXDIR) -lmlx -L$(LIBDIR) -lft $(FRAMEWORK) $^ -o $@
+	@$(CC) $(DFLAG) $(CFLAGS) -Imlx/ -L$(MLXDIR) -lmlx -L$(LIBDIR) -lft $(FRAMEWORK) $^ -o $@
 
 %.o : %.c
 	@$(CC) $(DFLAG) $(CFLAGS) -Imlx -c $< -o $@

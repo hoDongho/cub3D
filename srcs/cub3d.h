@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:17 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/05 10:44:02 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/05 16:20:33 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define KEY_S 1
 # define KEY_D 2
 # define KEY_ESC 53
+# define KEY_SPACE 
 # define RED_BUTTON 17
 
 # include <stdio.h>
@@ -31,8 +32,17 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
-# include <mlx.h>
+# include <../mlx/mlx.h>
 # include "../libft/libft.h"
+
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+}	t_data;
 
 typedef struct s_dlist
 {
@@ -49,12 +59,18 @@ typedef struct s_var
 	void	*win;
 	int		width;
 	int		height;
-}				t_var;
+}			t_var;
 
 typedef struct s_info
 {
-	int		p_x;
-	int		p_y;
+	t_var	var;
+	double	p_x;
+	double	p_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+	int		start_dir;
 	char	*no_path;
 	char	*so_path;
 	char	*we_path;
@@ -62,7 +78,7 @@ typedef struct s_info
 	char	*floor_color;
 	char	*ceiling_color;
 	t_dlist	*map;
-}	t_info;
+}			t_info;
 
 // utils.c
 int		puterr_msg(char *str);
@@ -79,6 +95,7 @@ int		check_rgb(char *rgb, int i);
 t_dlist	*create_list(void);
 void	add_list(t_dlist **list, char *line, int height);
 void	delete_dlist(t_dlist *list);
+int		find_target(t_dlist *list, int x, int y);
 
 // map.c
 int		check_and_make_map(t_info *info, int fd);
@@ -89,5 +106,8 @@ int		into_game(t_info *info);
 // key.c
 int		key_press(int keycode, t_var *var);
 int		exit_hook(t_var *var);
+
+//color.c
+int		set_color(char *str);
 
 #endif

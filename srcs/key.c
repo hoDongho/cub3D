@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:42:25 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/05 10:45:58 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/05 14:04:08 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	exit_hook(t_var *var)
 
 int	key_press(int keycode, t_var *var)
 {
+	// if (keycode == KEY_W)
 	if (keycode == KEY_ESC)
 	{
 		mlx_destroy_window(var->mlx, var->win);
