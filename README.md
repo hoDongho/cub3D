@@ -10,6 +10,11 @@ __mlx를 활용한 간단한 게임 만들기__
 [2. Bonus Part](#bonus-part)
 
 ------
+
+# to do list
+- 좌우반전 해결
+- 이미지 출력이 예시랑 다른 방식으로 이루어짐.
+
 ------
 # Mandatory Part
 - __원활한 창 관리(창 변경, 최소화 등)구현__  :black_square_button:

@@ -6,7 +6,7 @@
 #    By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 15:49:02 by yehyun            #+#    #+#              #
-#    Updated: 2022/10/05 16:30:48 by yehyun           ###   ########seoul.kr   #
+#    Updated: 2022/10/06 16:54:24 by yehyun           ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC_DIR = srcs/
 SRC_BONUS_DIR = srcs_bonus/
 
 SRC =	main.c parser.c utils.c parser_utils.c doubly_list.c map.c \
-		game.c key.c color.c
+		game.c key.c ray_casting.c ray_utils.c
 SRC_BONUS = 
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
@@ -33,6 +33,8 @@ OBJS = $(SRCS:.c=.o)
 
 SRCS_BONUS = $(addprefix $(SRC_BONUS_DIR), $(SRC_BONUS))
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
+
+HEADER = srcs/cub3d.h
 
 all : $(NAME)
 
@@ -59,6 +61,8 @@ re :
 	@make all
 
 bonus : $(NAME_BONUS)
+
+$(OBJS) : $(HEADER)
 
 $(NAME_BONUS) : $(OBJS_BONUS)
 	@make -C $(MLXDIR)

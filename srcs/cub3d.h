@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:17 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/05 16:20:33 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/06 16:55:59 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@
 # define KEY_SPACE 
 # define RED_BUTTON 17
 
+# define WIDTH 1600
+# define HEIGHT 1080
+# define P_WIDTH 64
+# define P_HEIGHT 64
+
 # include <stdio.h>
 # include <fcntl.h>
 # include <unistd.h>
@@ -35,14 +40,16 @@
 # include <../mlx/mlx.h>
 # include "../libft/libft.h"
 
-typedef struct s_data
+typedef struct s_img
 {
 	void	*img;
-	char	*addr;
+	int		width;
+	int		height;
+	int		*addr;
 	int		bpp;
 	int		line_length;
 	int		endian;
-}	t_data;
+}				t_img;
 
 typedef struct s_dlist
 {
@@ -51,7 +58,39 @@ typedef struct s_dlist
 	char			*line;
 	int				width;
 	int				height;
-}					t_dlist;
+}				t_dlist;
+
+typedef struct s_ray
+{
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
+	int		side;
+	int		hit;
+	double	camera_x;
+	double	dir_x;
+	double	dir_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_wall_dist;
+}				t_ray;
+
+typedef struct s_draw
+{
+	int		line_height;
+	int		start;
+	int		end;
+	int		tex_num;
+	int		tex_x;
+	int		tex_y;
+	int		color;
+	double	wall_x;
+	double	step;
+	double	tex_pos;
+}				t_draw;
 
 typedef struct s_var
 {
@@ -59,17 +98,19 @@ typedef struct s_var
 	void	*win;
 	int		width;
 	int		height;
-}			t_var;
+}				t_var;
 
 typedef struct s_info
 {
 	t_var	var;
-	double	p_x;
-	double	p_y;
+	t_ray	ray;
+	t_img	main;
 	double	dir_x;
 	double	dir_y;
 	double	plane_x;
 	double	plane_y;
+	double	p_x;
+	double	p_y;
 	int		start_dir;
 	char	*no_path;
 	char	*so_path;
@@ -78,13 +119,14 @@ typedef struct s_info
 	char	*floor_color;
 	char	*ceiling_color;
 	t_dlist	*map;
+	int		**texture;
 }			t_info;
 
 // utils.c
 int		puterr_msg(char *str);
-int		parsing_map(t_info *info, char *filename);
 int		free_info(t_info *info);
 char	*gnl_scan(int fd, int flag);
+int		set_color(char *str);
 
 // parser_utils.c
 int		ft_access(char *filename, int flag);
@@ -97,6 +139,9 @@ void	add_list(t_dlist **list, char *line, int height);
 void	delete_dlist(t_dlist *list);
 int		find_target(t_dlist *list, int x, int y);
 
+// parser.c
+int		parsing_map(t_info *info, char *filename);
+
 // map.c
 int		check_and_make_map(t_info *info, int fd);
 
@@ -107,7 +152,12 @@ int		into_game(t_info *info);
 int		key_press(int keycode, t_var *var);
 int		exit_hook(t_var *var);
 
-//color.c
-int		set_color(char *str);
+//ray_casting.c
+int		ray_casting(t_info *info, t_ray *ray, int **buff);
+
+//ray_utils.c
+void	set_info_dir(t_info *info);
+void	init_ray(t_info *info, t_ray *ray, int x);
+void	init_step(t_info *info, t_ray *ray);
 
 #endif
