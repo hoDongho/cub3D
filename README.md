@@ -18,8 +18,9 @@ __mlx를 활용한 간단한 게임 만들기__
 - __이미지 관리__
 	- 오른쪽, 왼쪽 키를 통한 알맞은 시점변환 구현  :black_square_button:
 	- W, A, S, D 움직임 구현  :black_square_button:
-	- ESC로 종료 구현  :black_square_button:
-	- x눌렀을 때 종료 구현  :black_square_button:
+	- ESC로 종료 구현  :white_check_mark:
+	- x눌렀을 때 종료 구현  :white_check_mark:
+	- 천장과 바닥 new image로 구현 :black_square_button:
 - __맵__
 	- 0, 1, E, W, S, W와 공백만 허용  :black_square_button:
 	- 맵은 벽으로 막혀있어야 함  :black_square_button:;

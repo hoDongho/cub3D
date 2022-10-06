@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:08:00 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/05 16:43:16 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/05 17:03:45 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int	dda(t_info *info, double rayDirX, double rayDirY, int start_x)
 	printf("%d %d\n", start_x, mapY);
 	if (side == 1)
 	{
+		
 		void *img = mlx_xpm_file_to_image(info->var.mlx, info->no_path, &w, &h);
 		mlx_put_image_to_window(info->var.mlx, info->var.win, img, start_x-32, 508);
 	}
