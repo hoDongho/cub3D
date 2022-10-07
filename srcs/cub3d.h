@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:17 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/07 13:45:36 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/07 16:54:02 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 # define C_CLOSE 11
 
 # define PRESS 2
+# define RELEASE 3
 # define KEY_W 13
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
+# define KEY_M 46
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
 # define KEY_ESC 53
@@ -31,6 +33,8 @@
 
 # define P_WIDTH 64
 # define P_HEIGHT 64
+
+# define MM_SIZE 18
 
 # include <stdio.h>
 # include <fcntl.h>
@@ -112,8 +116,8 @@ typedef struct s_info
 	double	p_x;
 	double	p_y;
 	double	move_speed;
-	double	rotate;
 	int		start_dir;
+	int		map_sw;
 	char	*no_path;
 	char	*so_path;
 	char	*we_path;
@@ -155,6 +159,17 @@ int		main_loop(t_info *info);
 // key.c
 int		key_press(int keycode, t_info *info);
 int		exit_hook(t_var *var);
+void	press_left_right(int keycode, t_info *info, double rotate);
+
+// move.c
+void	move_front(t_info *info);
+void	move_back(t_info *info);
+void	move_right(t_info *info);
+void	move_left(t_info *info);
+
+// draw.c
+void	draw_cell_floor(t_info *info, t_img *img);
+void	draw_game(t_info *info);
 
 //ray_casting.c
 int		ray_casting(t_info *info, t_ray *ray);
@@ -163,5 +178,8 @@ int		ray_casting(t_info *info, t_ray *ray);
 void	set_info_dir(t_info *info);
 void	init_ray(t_info *info, t_ray *ray, int x);
 void	init_step(t_info *info, t_ray *ray);
+
+//minimap.c
+int		minimap(t_info *info);
 
 #endif

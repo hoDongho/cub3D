@@ -6,7 +6,7 @@
 #    By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 15:49:02 by yehyun            #+#    #+#              #
-#    Updated: 2022/10/07 14:04:34 by yehyun           ###   ########seoul.kr   #
+#    Updated: 2022/10/07 17:02:24 by yehyun           ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,16 +22,13 @@ RM = rm -f
 MLXDIR = mlx/
 LIBDIR = libft/
 SRC_DIR = srcs/
-SRC_BONUS_DIR = srcs_bonus/
 
 SRC =	main.c parser.c utils.c parser_utils.c doubly_list.c map.c \
-		game.c key.c ray_casting.c ray_utils.c
-SRC_BONUS = 
+		game.c key.c ray_casting.c ray_utils.c minimap.c move.c draw.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 OBJS = $(SRCS:.c=.o)
 
-SRCS_BONUS = $(addprefix $(SRC_BONUS_DIR), $(SRC_BONUS))
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
 HEADER = srcs/cub3d.h
@@ -41,10 +38,10 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 	@make -C $(MLXDIR)
 	@make -C $(LIBDIR)
-	@$(CC) $(CFLAGS) -Imlx/ -L$(MLXDIR) -lmlx -L$(LIBDIR) -lft $(FRAMEWORK) $^ -o $@
+	@$(CC) $(DFLAG) $(CFLAGS) -Imlx/ -L$(MLXDIR) -lmlx -L$(LIBDIR) -lft $(FRAMEWORK) $^ -o $@
 
 %.o : %.c
-	@$(CC) $(CFLAGS) -Imlx -c $< -o $@
+	@$(CC) $(DFLAG) $(CFLAGS) -Imlx -c $< -o $@
 
 clean :
 	@make clean -C $(MLXDIR)
