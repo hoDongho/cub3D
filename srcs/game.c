@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:08:00 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/07 17:06:08 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/07 18:28:15 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	mouse_move(t_info *info)
 	int			x;
 	int			y;
 
-	mlx_mouse_get_pos(info->var.win, &x, &y);
+	mlx_mouse_get_pos(info->var.mlx, info->var.win, &x, &y);
 	if (y < 0 || y > info->var.height)
 		return (0);
 	if (x > std_x + info->var.width / 10)

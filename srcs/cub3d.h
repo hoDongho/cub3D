@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:17 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/07 16:54:02 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/07 19:38:34 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
-# include <../mlx/mlx.h>
+# include <../mlx_linux/mlx.h>
 # include "../libft/libft.h"
 
 typedef struct s_img
