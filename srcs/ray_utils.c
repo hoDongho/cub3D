@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:46:39 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/06 16:48:44 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/07 13:37:20 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,22 @@ void	set_info_dir(t_info *info)
 	if (info->start_dir == 'E')
 	{
 		info->dir_x = 1;
-		info->plane_y = 0.72;
+		info->plane_y = 0.99;
 	}
 	else if (info->start_dir == 'W')
 	{
 		info->dir_x = -1;
-		info->plane_y = -0.72;
+		info->plane_y = -0.99;
 	}
 	else if (info->start_dir == 'S')
 	{
 		info->dir_y = 1;
-		info->plane_x = -0.72;
+		info->plane_x = -0.99;
 	}
 	else if (info->start_dir == 'N')
 	{
 		info->dir_y = -1;
-		info->plane_x = 0.72;
+		info->plane_x = 0.99;
 	}
 }
 
@@ -62,7 +62,7 @@ void	init_step(t_info *info, t_ray *ray)
 
 void	init_ray(t_info *info, t_ray *ray, int x)
 {
-	ray->camera_x = 2 * x / (double)WIDTH - 1;
+	ray->camera_x = 2 * x / (double)info->var.width - 1;
 	ray->dir_x = info->dir_x + info->plane_x * ray->camera_x;
 	ray->dir_y = info->dir_y + info->plane_y * ray->camera_x;
 	ray->map_x = (int)info->p_x;

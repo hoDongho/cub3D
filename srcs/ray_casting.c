@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:38:03 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/06 16:48:51 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/07 13:45:04 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ int	get_texture_num(t_ray *ray)
 
 void	init_draw(t_info *info, t_ray *ray, t_draw *draw)
 {
-	draw->line_height = (int)(HEIGHT / ray->perp_wall_dist);
-	draw->start = -draw->line_height / 2 + HEIGHT / 2;
+	draw->line_height = (int)(info->var.height / ray->perp_wall_dist);
+	draw->start = -draw->line_height / 2 + info->var.height / 2;
 	if (draw->start < 0)
 		draw->start = 0;
-	draw->end = draw->line_height / 2 + HEIGHT / 2;
-	if (draw->end >= HEIGHT)
-		draw->end = HEIGHT - 1;
+	draw->end = draw->line_height / 2 + info->var.height / 2;
+	if (draw->end >= info->var.height)
+		draw->end = info->var.height - 1;
 	draw->tex_num = get_texture_num(ray);
 	if (ray->side == 0)
 		draw->wall_x = info->p_y + ray->perp_wall_dist * ray->dir_y;
@@ -73,11 +73,11 @@ void	init_draw(t_info *info, t_ray *ray, t_draw *draw)
 	if (ray->side == 1 && ray->dir_y < 0)
 		draw->tex_x = P_WIDTH - draw->tex_x - 1;
 	draw->step = 1.0 * P_HEIGHT / draw->line_height;
-	draw->tex_pos = (draw->start - HEIGHT / 2 + draw->line_height / 2)
+	draw->tex_pos = (draw->start - info->var.height / 2 + draw->line_height / 2)
 		* draw->step;
 }
 
-int	draw_texture_to_img(t_info *info, t_ray *ray, int **buff, int x)
+int	draw_texture_to_img(t_info *info, t_ray *ray, int x)
 {
 	t_draw	draw;
 
@@ -90,25 +90,24 @@ int	draw_texture_to_img(t_info *info, t_ray *ray, int **buff, int x)
 		draw.color = info->texture[draw.tex_num]
 		[P_HEIGHT * draw.tex_y + draw.tex_x];
 		if (ray->side == 1)
-				draw.color = (draw.color >> 1) & 8355711;
-		buff[draw.start][x] = draw.color;
+			draw.color = (draw.color >> 1) & 8355711;
+		info->buff[draw.start][x] = draw.color;
 		draw.start++;
 	}
 	return (0);
 }
 
-int	ray_casting(t_info *info, t_ray *ray, int **buff)
+int	ray_casting(t_info *info, t_ray *ray)
 {
 	int	x;
 
 	x = -1;
 	ft_memset(ray, 0, sizeof(t_ray));
-	set_info_dir(info);
-	while (++x < WIDTH)
+	while (++x < info->var.width)
 	{
 		init_ray(info, ray, x);
 		find_wall(info, ray);
-		draw_texture_to_img(info, ray, buff, x);
+		draw_texture_to_img(info, ray, x);
 	}
 	return (0);
 }

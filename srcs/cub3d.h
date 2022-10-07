@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:17 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/06 16:55:59 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/07 13:45:36 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
 # define KEY_ESC 53
-# define KEY_SPACE 
+# define KEY_SPACE 49
 # define RED_BUTTON 17
 
-# define WIDTH 1600
-# define HEIGHT 1080
 # define P_WIDTH 64
 # define P_HEIGHT 64
 
@@ -49,7 +49,7 @@ typedef struct s_img
 	int		bpp;
 	int		line_length;
 	int		endian;
-}				t_img;
+}			t_img;
 
 typedef struct s_dlist
 {
@@ -58,7 +58,7 @@ typedef struct s_dlist
 	char			*line;
 	int				width;
 	int				height;
-}				t_dlist;
+}					t_dlist;
 
 typedef struct s_ray
 {
@@ -76,7 +76,7 @@ typedef struct s_ray
 	double	delta_dist_x;
 	double	delta_dist_y;
 	double	perp_wall_dist;
-}				t_ray;
+}			t_ray;
 
 typedef struct s_draw
 {
@@ -90,7 +90,7 @@ typedef struct s_draw
 	double	wall_x;
 	double	step;
 	double	tex_pos;
-}				t_draw;
+}			t_draw;
 
 typedef struct s_var
 {
@@ -98,7 +98,7 @@ typedef struct s_var
 	void	*win;
 	int		width;
 	int		height;
-}				t_var;
+}			t_var;
 
 typedef struct s_info
 {
@@ -111,6 +111,8 @@ typedef struct s_info
 	double	plane_y;
 	double	p_x;
 	double	p_y;
+	double	move_speed;
+	double	rotate;
 	int		start_dir;
 	char	*no_path;
 	char	*so_path;
@@ -120,6 +122,7 @@ typedef struct s_info
 	char	*ceiling_color;
 	t_dlist	*map;
 	int		**texture;
+	int		**buff;
 }			t_info;
 
 // utils.c
@@ -147,13 +150,14 @@ int		check_and_make_map(t_info *info, int fd);
 
 // game.c
 int		into_game(t_info *info);
+int		main_loop(t_info *info);
 
 // key.c
-int		key_press(int keycode, t_var *var);
+int		key_press(int keycode, t_info *info);
 int		exit_hook(t_var *var);
 
 //ray_casting.c
-int		ray_casting(t_info *info, t_ray *ray, int **buff);
+int		ray_casting(t_info *info, t_ray *ray);
 
 //ray_utils.c
 void	set_info_dir(t_info *info);

@@ -1,16 +1,12 @@
-NO ./imgs/N_yellow.xpm
+NO ./imgs/TECH_0E.xpm
+WE ./imgs/TECH_0F.xpm
+EA ./imgs/TECH_0G.xpm
+SO ./imgs/TECH_0D.xpm
 
+C 0,0,51
 
-WE ./imgs/W_red.xpm
+F 51,51,50
 
-EA ./imgs/E_green.xpm
-
-
-SO ./imgs/S_blue.xpm
-
-C 0,155,255
-
-F 100,100,100
 
         1111111111111111111111111
         1000000000110000000000001

@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 15:49:15 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/05 13:40:45 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/07 11:20:08 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ static int	check_elem(t_info *info, t_dlist *now, int i, int *flag)
 	{
 		if (!(*flag) && ++(*flag))
 		{
-			info->p_x = (double)i;
-			info->p_y = (double)now->height;
+			info->p_x = (double)i + 0.5;
+			info->p_y = (double)now->height + 0.5;
 			info->start_dir = now->line[i];
 			now->line[i] = '0';
 			return (0);

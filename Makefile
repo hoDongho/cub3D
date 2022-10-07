@@ -6,7 +6,7 @@
 #    By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 15:49:02 by yehyun            #+#    #+#              #
-#    Updated: 2022/10/06 16:54:24 by yehyun           ###   ########seoul.kr   #
+#    Updated: 2022/10/07 14:04:34 by yehyun           ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,10 +41,10 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 	@make -C $(MLXDIR)
 	@make -C $(LIBDIR)
-	@$(CC) $(DFLAG) $(CFLAGS) -Imlx/ -L$(MLXDIR) -lmlx -L$(LIBDIR) -lft $(FRAMEWORK) $^ -o $@
+	@$(CC) $(CFLAGS) -Imlx/ -L$(MLXDIR) -lmlx -L$(LIBDIR) -lft $(FRAMEWORK) $^ -o $@
 
 %.o : %.c
-	@$(CC) $(DFLAG) $(CFLAGS) -Imlx -c $< -o $@
+	@$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
 clean :
 	@make clean -C $(MLXDIR)

@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:08:00 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/06 16:49:18 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/07 13:49:21 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,16 @@ void	draw_cell_floor(t_info *info, t_img *img)
 
 	ceiling = set_color(info->ceiling_color);
 	floor = set_color(info->floor_color);
-	printf("%d, %d\n", ceiling, floor);
 	i = -1;
-	while (++i < HEIGHT)
+	while (++i < info->var.height)
 	{
 		j = -1;
-		while (++j < WIDTH)
+		while (++j < info->var.width)
 		{
-			if (i < HEIGHT / 2)
-				img->addr[i * WIDTH + j] = ceiling;
-			if (i >= HEIGHT / 2)
-				img->addr[i * WIDTH + j] = floor;
+			if (i < info->var.height / 2)
+				img->addr[i * info->var.width + j] = ceiling;
+			if (i >= info->var.height / 2)
+				img->addr[i * info->var.width + j] = floor;
 		}
 	}
 }
@@ -55,61 +54,70 @@ void	load_image(t_info *info, int *texture, char *path, t_img *img)
 	mlx_destroy_image(info->var.mlx, img->img);
 }
 
-void	set_texture(t_info *info)
+void	set_info(t_info *info)
 {
 	int		i;
+	int		j;
 	t_img	img;
 
+	info->var.width = 1200;
+	info->var.height = 700;
+	info->move_speed = 0.2;
+	info->rotate = 0.2;
 	i = -1;
-	while (++i < 4)
-		info->texture[i] = ft_calloc(P_HEIGHT * P_WIDTH, sizeof(int));
+	info->buff = ft_calloc(info->var.height, sizeof(int *));
+	while (++i < info->var.height)
+		info->buff[i] = ft_calloc(info->var.width, sizeof(int));
+	j = -1;
+	info->texture = ft_calloc(4, sizeof(int *));
+	while (++j < 4)
+		info->texture[j] = ft_calloc(P_HEIGHT * P_WIDTH, sizeof(int));
 	load_image(info, info->texture[0], info->ea_path, &img);
 	load_image(info, info->texture[1], info->we_path, &img);
 	load_image(info, info->texture[2], info->so_path, &img);
 	load_image(info, info->texture[3], info->no_path, &img);
 }
 
-void	draw_game(t_info *info, int **buff)
+void	draw_game(t_info *info)
 {
 	int	x;
 	int	y;
 
 	y = -1;
-	while (++y < HEIGHT)
+	while (++y < info->var.height)
 	{
 		x = -1;
-		while (++x < WIDTH)
+		while (++x < info->var.width)
 		{
-			if (buff[y][x])
+			if (info->buff[y][x])
 			{
-				info->main.addr[y * WIDTH + x] = buff[y][x];
-				buff[y][x] = 0;
+				info->main.addr[y * info->var.width + x] = info->buff[y][x];
+				info->buff[y][x] = 0;
 			}
 		}
 	}
+	mlx_put_image_to_window(info->var.mlx, info->var.win, info->main.img, 0, 0);
+}
+
+int	main_loop(t_info *info)
+{
+	draw_cell_floor(info, &info->main);
+	ray_casting(info, &info->ray);
+	draw_game(info);
+	return (0);
 }
 
 int	into_game(t_info *info)
 {
-	int	**buff;
-	int	i;
-
-	i = -1;
-	buff = ft_calloc(HEIGHT, sizeof(int *));
-	while (++i < HEIGHT)
-		buff[i] = ft_calloc(WIDTH, sizeof(int));
 	info->var.mlx = mlx_init();
-	info->var.win = mlx_new_window(info->var.mlx, WIDTH, HEIGHT, "cub3d");
-	info->main.img = mlx_new_image(info->var.mlx, WIDTH, HEIGHT);
+	set_info(info);
+	set_info_dir(info);
+	info->var.win = mlx_new_window(info->var.mlx, info->var.width, info->var.height, "cub3d");
+	info->main.img = mlx_new_image(info->var.mlx, info->var.width, info->var.height);
 	info->main.addr = (int *)mlx_get_data_addr(info->main.img, &info->main.bpp,
 			&info->main.line_length, &info->main.endian);
-	info->texture = ft_calloc(4, sizeof(int *));
-	draw_cell_floor(info, &info->main);
-	set_texture(info);
-	ray_casting(info, &info->ray, buff);
-	draw_game(info, buff);
-	mlx_put_image_to_window(info->var.mlx, info->var.win, info->main.img, 0, 0);
-	mlx_hook(info->var.win, PRESS, 0, &key_press, &info->var);
+	mlx_loop_hook(info->var.mlx, &main_loop, info);
+	mlx_hook(info->var.win, PRESS, 0, &key_press, info);
 	mlx_hook(info->var.win, RED_BUTTON, 0, &exit_hook, &info->var);
 	mlx_loop(info->var.mlx);
 	return (0);
