@@ -6,13 +6,13 @@
 #    By: littley <littley@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 15:49:02 by yehyun            #+#    #+#              #
-#    Updated: 2022/10/11 20:19:05 by littley          ###   ########.fr        #
+#    Updated: 2022/10/11 20:38:44 by littley          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
-CC = cc
+CC = cc -O2
 CFLAGS = -Wall -Wextra -Werror
 DFLAG = -g2 -fsanitize=address
 RM = rm -f

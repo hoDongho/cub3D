@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:08:00 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/11 16:12:24 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/12 00:03:08 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	load_image(t_info *info, int *texture, char *path, t_img *img)
 	int	x;
 	int	y;
 
-	img->img = mlx_xpm_file_to_image(info->var.mlx, path,
+	img->img = mlx_xpm_file_to_image(info->mlx, path,
 			&img->width, &img->height);
 	img->addr = (int *)mlx_get_data_addr(img->img, &img->bpp,
 			&img->line_length, &img->endian);
@@ -28,7 +28,7 @@ void	load_image(t_info *info, int *texture, char *path, t_img *img)
 		while (++x < img->width)
 			texture[img->width * y + x] = img->addr[img->width * y + x];
 	}
-	mlx_destroy_image(info->var.mlx, img->img);
+	mlx_destroy_image(info->mlx, img->img);
 }
 
 void	set_info(t_info *info)
@@ -37,13 +37,10 @@ void	set_info(t_info *info)
 	int		j;
 	t_img	img;
 
-	info->var.width = 1200;
-	info->var.height = 700;
-	info->move_speed = 0.07;
 	i = -1;
-	info->buff = ft_calloc(info->var.height, sizeof(int *));
-	while (++i < info->var.height)
-		info->buff[i] = ft_calloc(info->var.width, sizeof(int));
+	info->buff = ft_calloc(W_HEIGHT, sizeof(int *));
+	while (++i < W_HEIGHT)
+		info->buff[i] = ft_calloc(W_WIDTH, sizeof(int));
 	j = -1;
 	info->texture = ft_calloc(5, sizeof(int *));
 	while (++j < 5)
@@ -57,17 +54,17 @@ void	set_info(t_info *info)
 
 int	mouse_move(t_info *info)
 {
-	const int	std_x = info->var.width / 2;
+	const int	std_x = W_WIDTH / 2;
 	int			x;
 	int			y;
 
-	mlx_mouse_get_pos(info->var.win, &x, &y);
-	if (y < 0 || y > info->var.height)
+	mlx_mouse_get_pos(info->mlx, info->win, &x, &y);
+	if (y < 0 || y > W_HEIGHT)
 		return (0);
-	if (x > std_x + info->var.width / 4)
-		rotate_view(KEY_RIGHT, info, 0.00008 * abs(std_x - x));
-	else if (x < std_x - info->var.width / 4)
-		rotate_view(KEY_LEFT, info, 0.00008 * abs(std_x - x));
+	if (x > std_x + W_WIDTH / 4)
+		rotate_view(KEY_RIGHT, info, ROTATE_SPEED / 500 * abs(std_x - x));
+	else if (x < std_x - W_WIDTH / 4)
+		rotate_view(KEY_LEFT, info, ROTATE_SPEED / 500 * abs(std_x - x));
 	return (0);
 }
 
@@ -86,9 +83,9 @@ int	main_loop(t_info *info)
 	if (info->key_flag[3])
 		move_left(info);
 	if (info->key_flag[4])
-		rotate_view(KEY_LEFT, info, 0.05);
+		rotate_view(KEY_LEFT, info, ROTATE_SPEED);
 	if (info->key_flag[5])
-		rotate_view(KEY_RIGHT, info, 0.05);
+		rotate_view(KEY_RIGHT, info, ROTATE_SPEED);
 	if (info->map_sw)
 		minimap(info);
 	return (0);
@@ -96,20 +93,20 @@ int	main_loop(t_info *info)
 
 int	into_game(t_info *info)
 {
-	info->var.mlx = mlx_init();
-	mlx_do_key_autorepeatoff(info->var.mlx);
+	info->mlx = mlx_init();
+	mlx_do_key_autorepeatoff(info->mlx);
 	set_info(info);
 	set_info_dir(info);
-	info->var.win = mlx_new_window(info->var.mlx,
-			info->var.width, info->var.height, "cub3d");
-	info->main.img = mlx_new_image(info->var.mlx,
-			info->var.width, info->var.height);
+	info->win = mlx_new_window(info->mlx,
+			W_WIDTH, W_HEIGHT, "cub3d");
+	info->main.img = mlx_new_image(info->mlx,
+			W_WIDTH, W_HEIGHT);
 	info->main.addr = (int *)mlx_get_data_addr(info->main.img, &info->main.bpp,
 			&info->main.line_length, &info->main.endian);
-	mlx_loop_hook(info->var.mlx, &main_loop, info);
-	mlx_hook(info->var.win, PRESS, 0, &key_press, info);
-	mlx_hook(info->var.win, RELEASE, 0, &key_release, info);
-	mlx_hook(info->var.win, RED_BUTTON, 0, &exit_hook, &info->var);
-	mlx_loop(info->var.mlx);
+	mlx_loop_hook(info->mlx, &main_loop, info);
+	mlx_hook(info->win, PRESS, 1L << 0, &key_press, info);
+	mlx_hook(info->win, RELEASE, 1L << 1, &key_release, info);
+	mlx_hook(info->win, 33, 1L << 17, &exit_hook, info);
+	mlx_loop(info->mlx);
 	return (0);
 }

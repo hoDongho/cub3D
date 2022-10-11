@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:38:03 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/11 15:49:13 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/12 00:03:08 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ int	get_texture_num(t_ray *ray)
 
 void	init_draw(t_info *info, t_ray *ray, t_draw *draw)
 {
-	draw->line_height = (int)(info->var.height / ray->perp_wall_dist);
-	draw->start = -draw->line_height / 2 + info->var.height / 2;
+	draw->line_height = (int)(W_HEIGHT / ray->perp_wall_dist);
+	draw->start = -draw->line_height / 2 + W_HEIGHT / 2;
 	if (draw->start < 0)
 		draw->start = 0;
-	draw->end = draw->line_height / 2 + info->var.height / 2;
-	if (draw->end >= info->var.height)
-		draw->end = info->var.height - 1;
+	draw->end = draw->line_height / 2 + W_HEIGHT / 2;
+	if (draw->end >= W_HEIGHT)
+		draw->end = W_HEIGHT - 1;
 	draw->tex_num = get_texture_num(ray);
 	if (ray->side == 0)
 		draw->wall_x = info->p_y + ray->perp_wall_dist * ray->dir_y;
@@ -74,7 +74,7 @@ void	init_draw(t_info *info, t_ray *ray, t_draw *draw)
 	if (ray->side == 1 && ray->dir_y < 0)
 		draw->tex_x = P_WIDTH - draw->tex_x - 1;
 	draw->step = 1.0 * P_HEIGHT / draw->line_height;
-	draw->tex_pos = (draw->start - info->var.height / 2 + draw->line_height / 2)
+	draw->tex_pos = (draw->start - W_HEIGHT / 2 + draw->line_height / 2)
 		* draw->step;
 }
 
@@ -104,7 +104,7 @@ int	ray_casting(t_info *info, t_ray *ray)
 
 	x = -1;
 	ft_memset(ray, 0, sizeof(t_ray));
-	while (++x < info->var.width)
+	while (++x < W_WIDTH)
 	{
 		init_ray(info, ray, x);
 		find_wall(info, ray);

@@ -6,7 +6,7 @@
 /*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:17 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/11 20:16:55 by littley          ###   ########.fr       */
+/*   Updated: 2022/10/12 00:03:17 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,12 @@
 # define RED_BUTTON 79
 # define KEY_SPACE 32
 
+# define W_WIDTH 1600
+# define W_HEIGHT 900
 # define P_WIDTH 64
 # define P_HEIGHT 64
+# define MOVE_SPEED 0.014
+# define ROTATE_SPEED 0.01
 
 # define MM_SIZE 18
 
@@ -96,17 +100,8 @@ typedef struct s_draw
 	double	tex_pos;
 }			t_draw;
 
-typedef struct s_var
-{
-	void	*mlx;
-	void	*win;
-	int		width;
-	int		height;
-}			t_var;
-
 typedef struct s_info
 {
-	t_var	var;
 	t_ray	ray;
 	t_img	main;
 	double	dir_x;
@@ -115,10 +110,11 @@ typedef struct s_info
 	double	plane_y;
 	double	p_x;
 	double	p_y;
-	double	move_speed;
 	int		start_dir;
 	int		map_sw;
-	int		key_flag[6];
+	int		key_flag[7];
+	void	*mlx;
+	void	*win;
 	char	*no_path;
 	char	*so_path;
 	char	*we_path;
@@ -160,7 +156,7 @@ int		main_loop(t_info *info);
 // key.c
 int		key_press(int keycode, t_info *info);
 int		key_release(int keycode, t_info *info);
-int		exit_hook(t_var *var);
+int		exit_hook(t_info *info);
 void	rotate_view(int keycode, t_info *info, double rotate);
 
 // move.c

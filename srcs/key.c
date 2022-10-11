@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   key.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:42:25 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/11 16:12:37 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/11 23:58:48 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	exit_hook(t_var *var)
+int	exit_hook(t_info *info)
 {
 	ft_putendl_fd("Bye!", 1);
-	mlx_destroy_window(var->mlx, var->win);
+	mlx_destroy_window(info->mlx, info->win);
 	exit(0);
 }
 
 void	press_move(int keycode, t_info *info)
 {
-	printf("x: %f y: %f\n", info->dir_x, info->dir_y);
 	if (keycode == KEY_W)
 		info->key_flag[0] = 1;
 	else if (keycode == KEY_S)
@@ -95,7 +94,7 @@ int	key_press(int keycode, t_info *info)
 		move_door(info);
 	else if (keycode == KEY_ESC)
 	{
-		mlx_destroy_window(info->var.mlx, info->var.win);
+		mlx_destroy_window(info->mlx, info->win);
 		printf("Bye!\n");
 		exit(0);
 	}

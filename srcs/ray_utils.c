@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:46:39 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/07 16:54:24 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/12 00:02:47 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	init_step(t_info *info, t_ray *ray)
 
 void	init_ray(t_info *info, t_ray *ray, int x)
 {
-	ray->camera_x = 2 * x / (double)info->var.width - 1;
+	ray->camera_x = 2 * x / (double)W_WIDTH - 1;
 	ray->dir_x = info->dir_x + info->plane_x * ray->camera_x;
 	ray->dir_y = info->dir_y + info->plane_y * ray->camera_x;
 	ray->map_x = (int)info->p_x;
