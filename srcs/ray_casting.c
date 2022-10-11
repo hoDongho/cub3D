@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:38:03 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/07 13:45:04 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/11 15:49:13 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	find_wall(t_info *info, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (find_target(info->map, ray->map_x, ray->map_y) == '1')
-			ray->hit = 1;
+		ray->hit = find_target(info->map, ray->map_x, ray->map_y);
 	}
 	if (ray->side == 0)
 		ray->perp_wall_dist = (ray->map_x - info->p_x + (1 - ray->step_x) / 2)
@@ -41,6 +40,8 @@ void	find_wall(t_info *info, t_ray *ray)
 
 int	get_texture_num(t_ray *ray)
 {
+	if (ray->hit == 'C')
+		return (4);
 	if (ray->side == 0 && ray->dir_x < 0)
 		return (0);
 	if (ray->side == 0 && ray->dir_x >= 0)

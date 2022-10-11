@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 15:49:15 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/07 11:20:08 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/11 16:35:44 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	check_elem(t_info *info, t_dlist *now, int i, int *flag)
 {
 	if (now->line[i] != '1' && now->line[i] != '0' && now->line[i] != ' '
 		&& now->line[i] != 'N' && now->line[i] != 'S'
-		&& now->line[i] != 'E' && now->line[i] != 'W')
+		&& now->line[i] != 'E' && now->line[i] != 'W' && now->line[i] != 'C')
 		return (puterr_msg("map error!"));
 	if ((now->line[i] == 'N' || now->line[i] == 'S'
 			|| now->line[i] == 'E' || now->line[i] == 'W'))
@@ -80,6 +80,8 @@ static int	check_map(t_info *info, t_dlist *now, int start_flag)
 		{
 			if (now->line[i] == ' ')
 				check_space(now, i);
+			else if (now->line[i] == 'C')
+				check_door(now, i);
 			else if (now->line[i] != ' ')
 				check_elem(info, now, i, &start_flag);
 		}

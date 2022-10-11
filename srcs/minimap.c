@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:17:18 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/07 17:01:43 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/11 17:12:25 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ void	draw_pixel(t_img *minimap, int i, int j, int color)
 		w_cnt = MM_SIZE;
 		while (w_cnt)
 		{
-			minimap->addr[i * minimap->width + j + cnt] = color;
+			if (!(color == 0x60FFFF00
+					&& (w_cnt < 4 || w_cnt > 15 || h_cnt < 4 || h_cnt > 15)))
+				minimap->addr[i * minimap->width + j + cnt] = color;
 			cnt++;
 			w_cnt--;
 		}
@@ -66,17 +68,19 @@ void	draw_minimap(t_info *info, t_dlist *map, t_img *minimap)
 		j = -1;
 		while (++j < minimap->width / MM_SIZE)
 		{
+			draw_pixel(minimap, i, j, 0xFF000000);
 			if (j < map->width && map->line[j] != ' ')
 			{
+				draw_pixel(minimap, i, j, 0xA0FFFFFF);
 				if (map->line[j] == '1')
 					draw_pixel(minimap, i, j, 0xA0000000);
-				else if (map->line[j] == '0')
-					draw_pixel(minimap, i, j, 0xA0FFFFFF);
-				if (i == (int)info->p_y && j == (int)info->p_x)
+				else if (map->line[j] == 'C')
 					draw_pixel(minimap, i, j, 0xA0FF0000);
+				else if (map->line[j] == 'O')
+					draw_pixel(minimap, i, j, 0xA000FF00);
+				if (i == (int)info->p_y && j == (int)info->p_x)
+					draw_pixel(minimap, i, j, 0x60FFFF00);
 			}
-			else
-				draw_pixel(minimap, i, j, 0xFF000000);
 		}
 		map = map->next;
 	}

@@ -6,7 +6,7 @@
 #    By: littley <littley@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 15:49:02 by yehyun            #+#    #+#              #
-#    Updated: 2022/10/07 20:58:16 by littley          ###   ########.fr        #
+#    Updated: 2022/10/11 20:19:05 by littley          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ MLXDIR = mlx_linux/
 LIBDIR = libft/
 SRC_DIR = srcs/
 
-SRC =	main.c parser.c utils.c parser_utils.c doubly_list.c map.c \
+SRC =	main.c parser.c utils.c parser_utils.c doubly_list.c map.c door.c \
 		game.c key.c ray_casting.c ray_utils.c minimap.c move.c draw.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
