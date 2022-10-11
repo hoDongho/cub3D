@@ -6,7 +6,7 @@
 /*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:17 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 00:03:17 by littley          ###   ########.fr       */
+/*   Updated: 2022/10/12 00:47:36 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,10 @@
 
 # include <stdio.h>
 # include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
 # include <math.h>
-# include <../mlx_linux/mlx.h>
+# include <mlx.h>
 # include "../libft/libft.h"
+# include "ray_casting.h"
 
 typedef struct s_img
 {
@@ -68,42 +67,8 @@ typedef struct s_dlist
 	int				height;
 }					t_dlist;
 
-typedef struct s_ray
-{
-	int		map_x;
-	int		map_y;
-	int		step_x;
-	int		step_y;
-	int		side;
-	int		hit;
-	double	camera_x;
-	double	dir_x;
-	double	dir_y;
-	double	side_dist_x;
-	double	side_dist_y;
-	double	delta_dist_x;
-	double	delta_dist_y;
-	double	perp_wall_dist;
-}			t_ray;
-
-typedef struct s_draw
-{
-	int		line_height;
-	int		start;
-	int		end;
-	int		tex_num;
-	int		tex_x;
-	int		tex_y;
-	int		color;
-	double	wall_x;
-	double	step;
-	double	tex_pos;
-}			t_draw;
-
 typedef struct s_info
 {
-	t_ray	ray;
-	t_img	main;
 	double	dir_x;
 	double	dir_y;
 	double	plane_x;
@@ -112,7 +77,6 @@ typedef struct s_info
 	double	p_y;
 	int		start_dir;
 	int		map_sw;
-	int		key_flag[7];
 	void	*mlx;
 	void	*win;
 	char	*no_path;
@@ -124,6 +88,8 @@ typedef struct s_info
 	t_dlist	*map;
 	int		**texture;
 	int		**buff;
+	int		key_flag[7];
+	t_img	main;
 }			t_info;
 
 // utils.c
@@ -170,7 +136,7 @@ void	draw_cell_floor(t_info *info, t_img *img);
 void	draw_game(t_info *info);
 
 //ray_casting.c
-int		ray_casting(t_info *info, t_ray *ray);
+int		ray_casting(t_info *info);
 
 //ray_utils.c
 void	set_info_dir(t_info *info);

@@ -6,11 +6,12 @@
 /*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:46:39 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 00:02:47 by littley          ###   ########.fr       */
+/*   Updated: 2022/10/12 00:32:03 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "ray_casting.h"
 
 void	set_info_dir(t_info *info)
 {

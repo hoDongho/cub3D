@@ -6,11 +6,12 @@
 /*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:38:03 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 00:03:08 by littley          ###   ########.fr       */
+/*   Updated: 2022/10/12 00:33:01 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "ray_casting.h"
 
 void	find_wall(t_info *info, t_ray *ray)
 {
@@ -98,17 +99,18 @@ int	draw_texture_to_img(t_info *info, t_ray *ray, int x)
 	return (0);
 }
 
-int	ray_casting(t_info *info, t_ray *ray)
+int	ray_casting(t_info *info)
 {
-	int	x;
+	int		x;
+	t_ray	ray;
 
 	x = -1;
-	ft_memset(ray, 0, sizeof(t_ray));
+	ft_memset(&ray, 0, sizeof(t_ray));
 	while (++x < W_WIDTH)
 	{
-		init_ray(info, ray, x);
-		find_wall(info, ray);
-		draw_texture_to_img(info, ray, x);
+		init_ray(info, &ray, x);
+		find_wall(info, &ray);
+		draw_texture_to_img(info, &ray, x);
 	}
 	return (0);
 }

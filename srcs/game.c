@@ -6,7 +6,7 @@
 /*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:08:00 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 00:03:08 by littley          ###   ########.fr       */
+/*   Updated: 2022/10/12 00:33:51 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	mouse_move(t_info *info)
 int	main_loop(t_info *info)
 {
 	draw_cell_floor(info, &info->main);
-	ray_casting(info, &info->ray);
+	ray_casting(info);
 	draw_game(info);
 	mouse_move(info);
 	if (info->key_flag[0])
