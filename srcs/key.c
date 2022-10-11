@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:42:25 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/07 16:50:09 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/11 16:12:37 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,24 @@ int	exit_hook(t_var *var)
 	exit(0);
 }
 
-void	press_wasd(int keycode, t_info *info)
+void	press_move(int keycode, t_info *info)
 {
+	printf("x: %f y: %f\n", info->dir_x, info->dir_y);
 	if (keycode == KEY_W)
-		move_front(info);
+		info->key_flag[0] = 1;
 	else if (keycode == KEY_S)
-		move_back(info);
+		info->key_flag[1] = 1;
 	else if (keycode == KEY_D)
-		move_right(info);
+		info->key_flag[2] = 1;
 	else if (keycode == KEY_A)
-		move_left(info);
+		info->key_flag[3] = 1;
+	else if (keycode == KEY_LEFT)
+		info->key_flag[4] = 1;
+	else if (keycode == KEY_RIGHT)
+		info->key_flag[5] = 1;
 }
 
-void	press_left_right(int keycode, t_info *info, double rotate)
+void	rotate_view(int keycode, t_info *info, double rotate)
 {
 	const double	old_dir_x = info->dir_x;
 	const double	old_plane_x = info->plane_x;
@@ -60,17 +65,34 @@ void	press_left_right(int keycode, t_info *info, double rotate)
 	}
 }
 
+int	key_release(int keycode, t_info *info)
+{
+	if (keycode == KEY_W)
+		info->key_flag[0] = 0;
+	else if (keycode == KEY_S)
+		info->key_flag[1] = 0;
+	else if (keycode == KEY_D)
+		info->key_flag[2] = 0;
+	else if (keycode == KEY_A)
+		info->key_flag[3] = 0;
+	else if (keycode == KEY_LEFT)
+		info->key_flag[4] = 0;
+	else if (keycode == KEY_RIGHT)
+		info->key_flag[5] = 0;
+	return (0);
+}
+
 int	key_press(int keycode, t_info *info)
 {
-	if (keycode == KEY_W || keycode == KEY_A \
-		|| keycode == KEY_S || keycode == KEY_D)
-		press_wasd(keycode, info);
-	else if (keycode == KEY_LEFT || keycode == KEY_RIGHT)
-		press_left_right(keycode, info, 0.2);
+	if (keycode == KEY_W || keycode == KEY_A || keycode == KEY_LEFT \
+		|| keycode == KEY_S || keycode == KEY_D || keycode == KEY_RIGHT)
+		press_move(keycode, info);
 	else if (keycode == KEY_M && !info->map_sw)
 		info->map_sw = 1;
 	else if (keycode == KEY_M)
 		info->map_sw = 0;
+	else if (keycode == KEY_SPACE)
+		move_door(info);
 	else if (keycode == KEY_ESC)
 	{
 		mlx_destroy_window(info->var.mlx, info->var.win);

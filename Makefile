@@ -6,7 +6,7 @@
 #    By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 15:49:02 by yehyun            #+#    #+#              #
-#    Updated: 2022/10/07 17:02:24 by yehyun           ###   ########seoul.kr   #
+#    Updated: 2022/10/11 16:42:54 by yehyun           ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ MLXDIR = mlx/
 LIBDIR = libft/
 SRC_DIR = srcs/
 
-SRC =	main.c parser.c utils.c parser_utils.c doubly_list.c map.c \
+SRC =	main.c parser.c utils.c parser_utils.c doubly_list.c map.c door.c \
 		game.c key.c ray_casting.c ray_utils.c minimap.c move.c draw.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
@@ -38,10 +38,10 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 	@make -C $(MLXDIR)
 	@make -C $(LIBDIR)
-	@$(CC) $(DFLAG) $(CFLAGS) -Imlx/ -L$(MLXDIR) -lmlx -L$(LIBDIR) -lft $(FRAMEWORK) $^ -o $@
+	@$(CC) $(CFLAGS) -Imlx/ -L$(MLXDIR) -lmlx -L$(LIBDIR) -lft $(FRAMEWORK) $^ -o $@
 
 %.o : %.c
-	@$(CC) $(DFLAG) $(CFLAGS) -Imlx -c $< -o $@
+	@$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
 clean :
 	@make clean -C $(MLXDIR)

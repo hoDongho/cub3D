@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:17 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/07 16:54:02 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/11 16:39:04 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct s_info
 	double	move_speed;
 	int		start_dir;
 	int		map_sw;
+	int		key_flag[6];
 	char	*no_path;
 	char	*so_path;
 	char	*we_path;
@@ -158,8 +159,9 @@ int		main_loop(t_info *info);
 
 // key.c
 int		key_press(int keycode, t_info *info);
+int		key_release(int keycode, t_info *info);
 int		exit_hook(t_var *var);
-void	press_left_right(int keycode, t_info *info, double rotate);
+void	rotate_view(int keycode, t_info *info, double rotate);
 
 // move.c
 void	move_front(t_info *info);
@@ -181,5 +183,9 @@ void	init_step(t_info *info, t_ray *ray);
 
 //minimap.c
 int		minimap(t_info *info);
+
+//door.c
+int		move_door(t_info *info);
+int		check_door(t_dlist *now, int i);
 
 #endif
