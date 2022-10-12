@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:52:50 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/07 16:54:01 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/12 00:03:08 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ void	draw_cell_floor(t_info *info, t_img *img)
 	ceiling = set_color(info->ceiling_color);
 	floor = set_color(info->floor_color);
 	i = -1;
-	while (++i < info->var.height)
+	while (++i < W_HEIGHT)
 	{
 		j = -1;
-		while (++j < info->var.width)
+		while (++j < W_WIDTH)
 		{
-			if (i < info->var.height / 2)
-				img->addr[i * info->var.width + j] = ceiling;
-			if (i >= info->var.height / 2)
-				img->addr[i * info->var.width + j] = floor;
+			if (i < W_HEIGHT / 2)
+				img->addr[i * W_WIDTH + j] = ceiling;
+			if (i >= W_HEIGHT / 2)
+				img->addr[i * W_WIDTH + j] = floor;
 		}
 	}
 }
@@ -41,17 +41,17 @@ void	draw_game(t_info *info)
 	int	y;
 
 	y = -1;
-	while (++y < info->var.height)
+	while (++y < W_HEIGHT)
 	{
 		x = -1;
-		while (++x < info->var.width)
+		while (++x < W_WIDTH)
 		{
 			if (info->buff[y][x])
 			{
-				info->main.addr[y * info->var.width + x] = info->buff[y][x];
+				info->main.addr[y * W_WIDTH + x] = info->buff[y][x];
 				info->buff[y][x] = 0;
 			}
 		}
 	}
-	mlx_put_image_to_window(info->var.mlx, info->var.win, info->main.img, 0, 0);
+	mlx_put_image_to_window(info->mlx, info->win, info->main.img, 0, 0);
 }

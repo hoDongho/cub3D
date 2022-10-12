@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:17:18 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/11 17:12:25 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/12 00:03:08 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ int	minimap(t_info *info)
 
 	ft_memset(&minimap, 0, sizeof(t_img));
 	set_size(info->map, &minimap.width, &minimap.height);
-	minimap.img = mlx_new_image(info->var.mlx, minimap.width, minimap.height);
+	minimap.img = mlx_new_image(info->mlx, minimap.width, minimap.height);
 	minimap.addr = (int *)mlx_get_data_addr(minimap.img, \
 					&minimap.bpp, &minimap.line_length, &minimap.endian);
 	draw_minimap(info, info->map, &minimap);
-	mlx_put_image_to_window(info->var.mlx, info->var.win, \
+	mlx_put_image_to_window(info->mlx, info->win, \
 					minimap.img, \
-					(info->var.width - minimap.width) / 2, \
-					(info->var.height - minimap.height) / 2);
+					(W_WIDTH - minimap.width) / 2, \
+					(W_HEIGHT - minimap.height) / 2);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:17 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/11 16:39:04 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/12 00:47:36 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 
 # define PRESS 2
 # define RELEASE 3
+
 # define KEY_W 13
-# define KEY_A 123
+# define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
 # define KEY_M 46
@@ -31,18 +32,21 @@
 # define KEY_SPACE 49
 # define RED_BUTTON 17
 
+# define W_WIDTH 1600
+# define W_HEIGHT 900
 # define P_WIDTH 64
 # define P_HEIGHT 64
+# define MOVE_SPEED 0.014
+# define ROTATE_SPEED 0.01
 
 # define MM_SIZE 18
 
 # include <stdio.h>
 # include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
 # include <math.h>
-# include <../mlx/mlx.h>
+# include <mlx.h>
 # include "../libft/libft.h"
+# include "ray_casting.h"
 
 typedef struct s_img
 {
@@ -64,61 +68,18 @@ typedef struct s_dlist
 	int				height;
 }					t_dlist;
 
-typedef struct s_ray
-{
-	int		map_x;
-	int		map_y;
-	int		step_x;
-	int		step_y;
-	int		side;
-	int		hit;
-	double	camera_x;
-	double	dir_x;
-	double	dir_y;
-	double	side_dist_x;
-	double	side_dist_y;
-	double	delta_dist_x;
-	double	delta_dist_y;
-	double	perp_wall_dist;
-}			t_ray;
-
-typedef struct s_draw
-{
-	int		line_height;
-	int		start;
-	int		end;
-	int		tex_num;
-	int		tex_x;
-	int		tex_y;
-	int		color;
-	double	wall_x;
-	double	step;
-	double	tex_pos;
-}			t_draw;
-
-typedef struct s_var
-{
-	void	*mlx;
-	void	*win;
-	int		width;
-	int		height;
-}			t_var;
-
 typedef struct s_info
 {
-	t_var	var;
-	t_ray	ray;
-	t_img	main;
 	double	dir_x;
 	double	dir_y;
 	double	plane_x;
 	double	plane_y;
 	double	p_x;
 	double	p_y;
-	double	move_speed;
 	int		start_dir;
 	int		map_sw;
-	int		key_flag[6];
+	void	*mlx;
+	void	*win;
 	char	*no_path;
 	char	*so_path;
 	char	*we_path;
@@ -128,6 +89,8 @@ typedef struct s_info
 	t_dlist	*map;
 	int		**texture;
 	int		**buff;
+	int		key_flag[6];
+	t_img	main;
 }			t_info;
 
 // utils.c
@@ -160,7 +123,7 @@ int		main_loop(t_info *info);
 // key.c
 int		key_press(int keycode, t_info *info);
 int		key_release(int keycode, t_info *info);
-int		exit_hook(t_var *var);
+int		exit_hook(t_info *info);
 void	rotate_view(int keycode, t_info *info, double rotate);
 
 // move.c
@@ -174,7 +137,7 @@ void	draw_cell_floor(t_info *info, t_img *img);
 void	draw_game(t_info *info);
 
 //ray_casting.c
-int		ray_casting(t_info *info, t_ray *ray);
+int		ray_casting(t_info *info);
 
 //ray_utils.c
 void	set_info_dir(t_info *info);
