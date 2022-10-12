@@ -101,6 +101,7 @@ int	draw_texture_to_img(t_info *info, t_ray *ray, int x)
 int	ray_casting(t_info *info, t_ray *ray)
 {
 	int	x;
+	t_ray	ray2131;
 
 	x = -1;
 	ft_memset(ray, 0, sizeof(t_ray));
