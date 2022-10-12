@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:38:03 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 00:33:01 by littley          ###   ########.fr       */
+/*   Updated: 2022/10/12 11:51:02 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	find_wall(t_info *info, t_ray *ray)
 
 int	get_texture_num(t_ray *ray)
 {
-	if (ray->hit == 'C')
+	if (ray->hit == 'C' || ray-> hit == -1)
 		return (4);
 	if (ray->side == 0 && ray->dir_x < 0)
 		return (0);
@@ -85,6 +85,8 @@ int	draw_texture_to_img(t_info *info, t_ray *ray, int x)
 
 	ft_memset(&draw, 0, sizeof(t_draw));
 	init_draw(info, ray, &draw);
+	if (draw.tex_num == 4)
+		return (draw_door_to_img(info, ray, &draw, x));
 	while (draw.start < draw.end)
 	{
 		draw.tex_y = (int)draw.tex_pos & (P_HEIGHT - 1);

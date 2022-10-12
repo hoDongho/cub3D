@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:17:18 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 00:03:08 by littley          ###   ########.fr       */
+/*   Updated: 2022/10/12 11:47:32 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,33 @@ void	draw_pixel(t_img *minimap, int i, int j, int color)
 		w_cnt = MM_SIZE;
 		while (w_cnt)
 		{
-			if (!(color == 0x60FFFF00
-					&& (w_cnt < 4 || w_cnt > 15 || h_cnt < 4 || h_cnt > 15)))
-				minimap->addr[i * minimap->width + j + cnt] = color;
+			minimap->addr[i * minimap->width + j + cnt] = color;
+			cnt++;
+			w_cnt--;
+		}
+		i++;
+		h_cnt--;
+	}
+}
+
+void	draw_pixel_pos(t_img *minimap, int i, int j)
+{
+	int	w_cnt;
+	int	h_cnt;
+	int	cnt;
+
+	h_cnt = MM_SIZE;
+	i *= MM_SIZE;
+	j *= MM_SIZE;
+	while (h_cnt)
+	{
+		cnt = 0;
+		w_cnt = MM_SIZE;
+		while (w_cnt)
+		{
+			if (!(w_cnt < 6 || w_cnt > MM_SIZE - 5
+				|| h_cnt < 6 || h_cnt > MM_SIZE - 5))
+				minimap->addr[i * minimap->width + j + cnt] = 0x60FFFF00;
 			cnt++;
 			w_cnt--;
 		}
@@ -79,7 +103,7 @@ void	draw_minimap(t_info *info, t_dlist *map, t_img *minimap)
 				else if (map->line[j] == 'O')
 					draw_pixel(minimap, i, j, 0xA000FF00);
 				if (i == (int)info->p_y && j == (int)info->p_x)
-					draw_pixel(minimap, i, j, 0x60FFFF00);
+					draw_pixel_pos(minimap, i, j);
 			}
 		}
 		map = map->next;

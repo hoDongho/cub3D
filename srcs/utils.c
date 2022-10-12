@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:28:42 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/07 18:27:50 by littley          ###   ########.fr       */
+/*   Updated: 2022/10/12 10:39:26 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	set_color(char *str)
 	int		i;
 
 	tmp = ft_split(str, ',');
+	if (!tmp)
+		puterr_msg("color split error");
 	r = ft_atoi(tmp[0]);
 	g = ft_atoi(tmp[1]);
 	b = ft_atoi(tmp[2]);

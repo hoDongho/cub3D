@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:46:02 by yehyun            #+#    #+#             */
-/*   Updated: 2022/09/26 15:45:48 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/12 10:45:27 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ int	ft_access(char *filename, int flag)
 	return (0);
 }
 
-int	check_rgb(char *rgb, int i)
+int	check_rgb(char *rgb, int i, int ret)
 {
 	char	**spl;
 	int		index;
 	int		check;
-	int		ret;
 
 	while (!ft_isdigit(rgb[i]))
 		i++;
 	spl = ft_split(&rgb[i], ',');
-	ret = 0;
+	if (!spl)
+		puterr_msg("rgb split error!");
 	index = -1;
 	while (spl[++index])
 	{

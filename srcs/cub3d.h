@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:17 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 00:47:36 by littley          ###   ########.fr       */
+/*   Updated: 2022/10/12 11:13:53 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@
 # define W_HEIGHT 900
 # define P_WIDTH 64
 # define P_HEIGHT 64
-# define MOVE_SPEED 0.014
-# define ROTATE_SPEED 0.01
+# define MOVE_SPEED 0.035
+# define ROTATE_SPEED 0.03
 
-# define MM_SIZE 18
+# define MM_SIZE 25
 
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
-# include <mlx.h>
+# include "../mlx/mlx.h"
 # include "../libft/libft.h"
 # include "ray_casting.h"
 
@@ -90,6 +90,7 @@ typedef struct s_info
 	int		**texture;
 	int		**buff;
 	int		key_flag[6];
+	int		door;
 	t_img	main;
 }			t_info;
 
@@ -102,7 +103,7 @@ int		set_color(char *str);
 // parser_utils.c
 int		ft_access(char *filename, int flag);
 void	cali_info(t_info *info);
-int		check_rgb(char *rgb, int i);
+int		check_rgb(char *rgb, int i, int ret);
 
 // doubly_list.c
 t_dlist	*create_list(void);
@@ -150,5 +151,6 @@ int		minimap(t_info *info);
 //door.c
 int		move_door(t_info *info);
 int		check_door(t_dlist *now, int i);
+int		draw_door_to_img(t_info *info, t_ray *ray, t_draw *draw, int x);
 
 #endif

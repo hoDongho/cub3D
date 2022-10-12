@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:10 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/06 16:22:25 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/12 10:46:26 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ static int	check_basic(t_info *info, int fd)
 			|| ft_access(ft_strchr(info->so_path, '.'), C_CLOSE) == ERROR
 			|| ft_access(ft_strchr(info->ea_path, '.'), C_CLOSE) == ERROR
 			|| ft_access(ft_strchr(info->we_path, '.'), C_CLOSE) == ERROR
-			|| check_rgb(info->floor_color, 0) == ERROR
-			|| check_rgb(info->ceiling_color, 0) == ERROR)
+			|| check_rgb(info->floor_color, 0, 0) == ERROR
+			|| check_rgb(info->ceiling_color, 0, 0) == ERROR)
 		&& !free_info(info))
 		return (puterr_msg("invalid basic info"));
 	return (0);

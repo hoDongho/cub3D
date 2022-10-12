@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:37:15 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/11 16:17:12 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/12 12:12:34 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_dlist	*create_list(void)
 	t_dlist	*new;
 
 	new = ft_calloc(1, sizeof (t_dlist));
+	if (!new)
+		puterr_msg("list malloc error!");
 	return (new);
 }
 
@@ -73,5 +75,7 @@ int	find_target(t_dlist *list, int x, int y)
 		i++;
 	if (tmp->line[x] == '1' || tmp->line[x] == 'C')
 		return (tmp->line[x]);
+	if (tmp->line[x] == 'c' || tmp->line[x] == 'o')
+		return (-1);
 	return (0);
 }
