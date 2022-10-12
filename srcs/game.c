@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:08:00 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 10:47:56 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/12 16:05:09 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void	set_info(t_info *info, int i, int j)
 		if (!info->buff[i])
 			puterr_msg("buff malloc error");
 	}
-	info->texture = ft_calloc(5, sizeof(int *));
+	info->texture = ft_calloc(9, sizeof(int *));
 	if (!info->texture)
 		puterr_msg("texture malloc error");
-	while (++j < 5)
+	while (++j < 9)
 	{
 		info->texture[j] = ft_calloc(P_HEIGHT * P_WIDTH, sizeof(int));
 		if (!info->texture[j])
@@ -58,6 +58,10 @@ void	set_info(t_info *info, int i, int j)
 	load_image(info, info->texture[2], info->so_path, &img);
 	load_image(info, info->texture[3], info->no_path, &img);
 	load_image(info, info->texture[4], "imgs/DOOR_2A.xpm", &img);
+	load_image(info, info->texture[5], "imgs/CARD_1.xpm", &img);
+	load_image(info, info->texture[6], "imgs/CARD_2.xpm", &img);
+	load_image(info, info->texture[7], "imgs/CARD_3.xpm", &img);
+	load_image(info, info->texture[8], "imgs/CARD_4.xpm", &img);
 }
 
 int	mouse_move(t_info *info)
@@ -80,6 +84,7 @@ int	main_loop(t_info *info)
 {
 	draw_cell_floor(info, &info->main);
 	ray_casting(info);
+	sprite_ray_casting(info);
 	draw_game(info);
 	mouse_move(info);
 	if (info->key_flag[0])
@@ -96,6 +101,9 @@ int	main_loop(t_info *info)
 		rotate_view(KEY_RIGHT, info, ROTATE_SPEED);
 	if (info->map_sw)
 		minimap(info);
+	info->frame_cnt++;
+	if (info->frame_cnt == 2147483647)
+		info->frame_cnt = 0;
 	return (0);
 }
 

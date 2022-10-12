@@ -6,16 +6,16 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:38:03 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 11:51:02 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/12 15:52:24 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "ray_casting.h"
 
-void	find_wall(t_info *info, t_ray *ray)
+int	find_wall(t_info *info, t_ray *ray)
 {
-	while (ray->hit == 0)
+	while (1)
 	{
 		if (ray->side_dist_x < ray->side_dist_y)
 		{
@@ -30,6 +30,8 @@ void	find_wall(t_info *info, t_ray *ray)
 			ray->side = 1;
 		}
 		ray->hit = find_target(info->map, ray->map_x, ray->map_y);
+		if (ray->hit == '1' || ray->hit == 'C')
+			break ;
 	}
 	if (ray->side == 0)
 		ray->perp_wall_dist = (ray->map_x - info->p_x + (1 - ray->step_x) / 2)
@@ -37,12 +39,15 @@ void	find_wall(t_info *info, t_ray *ray)
 	else
 		ray->perp_wall_dist = (ray->map_y - info->p_y + (1 - ray->step_y) / 2)
 			/ ray->dir_y;
+	return (0);
 }
 
 int	get_texture_num(t_ray *ray)
 {
 	if (ray->hit == 'C' || ray-> hit == -1)
 		return (4);
+	if (ray->hit == 'K')
+		return (5);
 	if (ray->side == 0 && ray->dir_x < 0)
 		return (0);
 	if (ray->side == 0 && ray->dir_x >= 0)
@@ -85,8 +90,6 @@ int	draw_texture_to_img(t_info *info, t_ray *ray, int x)
 
 	ft_memset(&draw, 0, sizeof(t_draw));
 	init_draw(info, ray, &draw);
-	if (draw.tex_num == 4)
-		return (draw_door_to_img(info, ray, &draw, x));
 	while (draw.start < draw.end)
 	{
 		draw.tex_y = (int)draw.tex_pos & (P_HEIGHT - 1);
@@ -98,6 +101,7 @@ int	draw_texture_to_img(t_info *info, t_ray *ray, int x)
 		info->buff[draw.start][x] = draw.color;
 		draw.start++;
 	}
+	info->ZBuffer[x] = ray->perp_wall_dist;
 	return (0);
 }
 
@@ -111,8 +115,10 @@ int	ray_casting(t_info *info)
 	while (++x < W_WIDTH)
 	{
 		init_ray(info, &ray, x);
-		find_wall(info, &ray);
+		if (find_wall(info, &ray))
+			continue ;
 		draw_texture_to_img(info, &ray, x);
+		// draw_sprite(info);
 	}
 	return (0);
 }

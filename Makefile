@@ -6,7 +6,7 @@
 #    By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 15:49:02 by yehyun            #+#    #+#              #
-#    Updated: 2022/10/12 11:47:57 by yehyun           ###   ########seoul.kr   #
+#    Updated: 2022/10/12 16:02:05 by yehyun           ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIBDIR = libft/
 SRC_DIR = srcs/
 
 SRC =	main.c parser.c utils.c parser_utils.c doubly_list.c map.c door.c \
-		game.c key.c ray_casting.c ray_utils.c minimap.c move.c draw.c
+		game.c key.c ray_casting.c ray_utils.c minimap.c move.c draw.c sprite.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 OBJS = $(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:17 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 11:13:53 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/12 16:17:50 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ typedef struct s_info
 	int		**texture;
 	int		**buff;
 	int		key_flag[6];
-	int		door;
+	int		ZBuffer[W_WIDTH];
+	int		frame_cnt;
 	t_img	main;
 }			t_info;
 
@@ -120,6 +121,7 @@ int		check_and_make_map(t_info *info, int fd);
 // game.c
 int		into_game(t_info *info);
 int		main_loop(t_info *info);
+void	load_image(t_info *info, int *texture, char *path, t_img *img);
 
 // key.c
 int		key_press(int keycode, t_info *info);
@@ -139,6 +141,7 @@ void	draw_game(t_info *info);
 
 //ray_casting.c
 int		ray_casting(t_info *info);
+void	init_draw(t_info *info, t_ray *ray, t_draw *draw);
 
 //ray_utils.c
 void	set_info_dir(t_info *info);
@@ -151,6 +154,9 @@ int		minimap(t_info *info);
 //door.c
 int		move_door(t_info *info);
 int		check_door(t_dlist *now, int i);
-int		draw_door_to_img(t_info *info, t_ray *ray, t_draw *draw, int x);
+// int		draw_door_to_img(t_info *info, t_ray *ray, t_draw *draw, int x);
+
+//sprite.c
+int		sprite_ray_casting(t_info *info);
 
 #endif

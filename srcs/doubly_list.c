@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:37:15 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 12:12:34 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/12 13:50:09 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,7 @@ int	find_target(t_dlist *list, int x, int y)
 		tmp = tmp->next;
 	while (i != x)
 		i++;
-	if (tmp->line[x] == '1' || tmp->line[x] == 'C')
+	if (tmp->line[x] == '1' || tmp->line[x] == 'C' || tmp->line[x] == 'K')
 		return (tmp->line[x]);
-	if (tmp->line[x] == 'c' || tmp->line[x] == 'o')
-		return (-1);
 	return (0);
 }
