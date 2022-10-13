@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:46:02 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 10:45:27 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/13 15:25:19 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,24 +57,24 @@ void	cali_info(t_info *info)
 {
 	char	*tmp;
 
-	tmp = info->no_path;
-	info->no_path = ft_strdup(ft_strchr(info->no_path, '.'));
+	tmp = info->cub.no;
+	info->cub.no = ft_strdup(ft_strchr(info->cub.no, '.'));
 	free(tmp);
-	tmp = info->so_path;
-	info->so_path = ft_strdup(ft_strchr(info->so_path, '.'));
+	tmp = info->cub.so;
+	info->cub.so = ft_strdup(ft_strchr(info->cub.so, '.'));
 	free(tmp);
-	tmp = info->we_path;
-	info->we_path = ft_strdup(ft_strchr(info->we_path, '.'));
+	tmp = info->cub.we;
+	info->cub.we = ft_strdup(ft_strchr(info->cub.we, '.'));
 	free(tmp);
-	tmp = info->ea_path;
-	info->ea_path = ft_strdup(ft_strchr(info->ea_path, '.'));
+	tmp = info->cub.ea;
+	info->cub.ea = ft_strdup(ft_strchr(info->cub.ea, '.'));
 	free(tmp);
-	tmp = info->floor_color;
+	tmp = info->cub.floor;
 	while (!ft_isdigit(*tmp))
 		tmp++;
-	ft_strlcpy(info->floor_color, tmp, ft_strlen(tmp) + 1);
-	tmp = info->ceiling_color;
+	ft_strlcpy(info->cub.floor, tmp, ft_strlen(tmp) + 1);
+	tmp = info->cub.ceiling;
 	while (!ft_isdigit(*tmp))
 		tmp++;
-	ft_strlcpy(info->ceiling_color, tmp, ft_strlen(tmp) + 1);
+	ft_strlcpy(info->cub.ceiling, tmp, ft_strlen(tmp) + 1);
 }

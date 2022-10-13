@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:28:42 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 10:39:26 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/13 15:24:29 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ int	puterr_msg(char *str)
 
 int	free_info(t_info *info)
 {
-	if (info->no_path)
-		free(info->no_path);
-	if (info->so_path)
-		free(info->so_path);
-	if (info->we_path)
-		free(info->we_path);
-	if (info->ea_path)
-		free(info->ea_path);
+	if (info->cub.no)
+		free(info->cub.no);
+	if (info->cub.so)
+		free(info->cub.so);
+	if (info->cub.we)
+		free(info->cub.we);
+	if (info->cub.ea)
+		free(info->cub.ea);
 	if (info->map)
 		delete_dlist(info->map);
 	return (0);
@@ -77,4 +77,23 @@ char	*gnl_scan(int fd, int flag)
 	}
 	tmp[ft_strlen(tmp) - 1] = '\0';
 	return (tmp);
+}
+
+void	load_image(t_info *info, int *texture, char *path, t_img *img)
+{
+	int	x;
+	int	y;
+
+	img->img = mlx_xpm_file_to_image(info->mlx, path,
+			&img->width, &img->height);
+	img->addr = (int *)mlx_get_data_addr(img->img, &img->bpp,
+			&img->line_length, &img->endian);
+	y = -1;
+	while (++y < img->height)
+	{
+		x = -1;
+		while (++x < img->width)
+			texture[img->width * y + x] = img->addr[img->width * y + x];
+	}
+	mlx_destroy_image(info->mlx, img->img);
 }

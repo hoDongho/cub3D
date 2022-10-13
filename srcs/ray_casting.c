@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:38:03 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 15:52:24 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/13 15:30:25 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	find_wall(t_info *info, t_ray *ray)
 {
-	while (1)
+	while (ray->hit < 1)
 	{
 		if (ray->side_dist_x < ray->side_dist_y)
 		{
@@ -30,8 +30,6 @@ int	find_wall(t_info *info, t_ray *ray)
 			ray->side = 1;
 		}
 		ray->hit = find_target(info->map, ray->map_x, ray->map_y);
-		if (ray->hit == '1' || ray->hit == 'C')
-			break ;
 	}
 	if (ray->side == 0)
 		ray->perp_wall_dist = (ray->map_x - info->p_x + (1 - ray->step_x) / 2)
@@ -44,10 +42,8 @@ int	find_wall(t_info *info, t_ray *ray)
 
 int	get_texture_num(t_ray *ray)
 {
-	if (ray->hit == 'C' || ray-> hit == -1)
+	if (ray->hit == 'C' || ray-> hit == 'c')
 		return (4);
-	if (ray->hit == 'K')
-		return (5);
 	if (ray->side == 0 && ray->dir_x < 0)
 		return (0);
 	if (ray->side == 0 && ray->dir_x >= 0)
@@ -101,7 +97,7 @@ int	draw_texture_to_img(t_info *info, t_ray *ray, int x)
 		info->buff[draw.start][x] = draw.color;
 		draw.start++;
 	}
-	info->ZBuffer[x] = ray->perp_wall_dist;
+	info->z_buffer[x] = ray->perp_wall_dist;
 	return (0);
 }
 
@@ -118,7 +114,6 @@ int	ray_casting(t_info *info)
 		if (find_wall(info, &ray))
 			continue ;
 		draw_texture_to_img(info, &ray, x);
-		// draw_sprite(info);
 	}
 	return (0);
 }

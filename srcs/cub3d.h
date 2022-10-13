@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:17 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 16:17:50 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/13 15:56:12 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@
 
 # define MM_SIZE 25
 
-# include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
 # include "../mlx/mlx.h"
 # include "../libft/libft.h"
 # include "ray_casting.h"
+# include "sprite.h"
 
 typedef struct s_img
 {
@@ -68,38 +68,54 @@ typedef struct s_dlist
 	int				height;
 }					t_dlist;
 
+typedef struct s_cub
+{
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	char	*floor;
+	char	*ceiling;
+}			t_cub;
+
+typedef struct s_sprite
+{
+	double	x;
+	double	y;
+}			t_sprite;
+
 typedef struct s_info
 {
-	double	dir_x;
-	double	dir_y;
-	double	plane_x;
-	double	plane_y;
-	double	p_x;
-	double	p_y;
-	int		start_dir;
-	int		map_sw;
-	void	*mlx;
-	void	*win;
-	char	*no_path;
-	char	*so_path;
-	char	*we_path;
-	char	*ea_path;
-	char	*floor_color;
-	char	*ceiling_color;
-	t_dlist	*map;
-	int		**texture;
-	int		**buff;
-	int		key_flag[6];
-	int		ZBuffer[W_WIDTH];
-	int		frame_cnt;
-	t_img	main;
-}			t_info;
+	double		dir_x;
+	double		dir_y;
+	double		plane_x;
+	double		plane_y;
+	double		p_x;
+	double		p_y;
+	int			start_dir;
+	int			map_sw;
+	int			frame_cnt;
+	int			door_cnt;
+	int			key_cnt;
+	int			access_cnt;
+	void		*mlx;
+	void		*win;
+	t_dlist		*map;
+	t_sprite	*sprite;
+	int			**texture;
+	int			**buff;
+	int			key_flag[6];
+	int			z_buffer[W_WIDTH];
+	t_cub		cub;
+	t_img		main;
+}				t_info;
 
 // utils.c
 int		puterr_msg(char *str);
 int		free_info(t_info *info);
 char	*gnl_scan(int fd, int flag);
 int		set_color(char *str);
+void	load_image(t_info *info, int *texture, char *path, t_img *img);
 
 // parser_utils.c
 int		ft_access(char *filename, int flag);
@@ -123,7 +139,7 @@ int		into_game(t_info *info);
 int		main_loop(t_info *info);
 void	load_image(t_info *info, int *texture, char *path, t_img *img);
 
-// key.c
+// sprite.c
 int		key_press(int keycode, t_info *info);
 int		key_release(int keycode, t_info *info);
 int		exit_hook(t_info *info);
@@ -139,24 +155,31 @@ void	move_left(t_info *info);
 void	draw_cell_floor(t_info *info, t_img *img);
 void	draw_game(t_info *info);
 
-//ray_casting.c
+// ray_casting.c
 int		ray_casting(t_info *info);
 void	init_draw(t_info *info, t_ray *ray, t_draw *draw);
 
-//ray_utils.c
+// ray_utils.c
 void	set_info_dir(t_info *info);
 void	init_ray(t_info *info, t_ray *ray, int x);
 void	init_step(t_info *info, t_ray *ray);
 
-//minimap.c
+// minimap.c
 int		minimap(t_info *info);
 
-//door.c
+// door.c
 int		move_door(t_info *info);
 int		check_door(t_dlist *now, int i);
-// int		draw_door_to_img(t_info *info, t_ray *ray, t_draw *draw, int x);
 
-//sprite.c
-int		sprite_ray_casting(t_info *info);
+// sprite.c
+int		sprite(t_info *info);
+int		count_elem(t_dlist *map, int c);
+
+// sprite_utils.c
+int		count_elem(t_dlist *map, int c);
+void	set_sprite(t_dlist *map, t_sprite *sprite);
+void	sort_sprites(int *order, double *distance, int amount);
+void	sort_order(t_pair *orders, int amount);
+void	take_card(t_info *info);
 
 #endif

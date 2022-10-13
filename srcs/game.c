@@ -6,35 +6,29 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:08:00 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 16:05:09 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/13 16:16:58 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	load_image(t_info *info, int *texture, char *path, t_img *img)
+void	load_texture(t_info *info)
 {
-	int	x;
-	int	y;
+	t_img	img;
 
-	img->img = mlx_xpm_file_to_image(info->mlx, path,
-			&img->width, &img->height);
-	img->addr = (int *)mlx_get_data_addr(img->img, &img->bpp,
-			&img->line_length, &img->endian);
-	y = -1;
-	while (++y < img->height)
-	{
-		x = -1;
-		while (++x < img->width)
-			texture[img->width * y + x] = img->addr[img->width * y + x];
-	}
-	mlx_destroy_image(info->mlx, img->img);
+	load_image(info, info->texture[0], info->cub.ea, &img);
+	load_image(info, info->texture[1], info->cub.we, &img);
+	load_image(info, info->texture[2], info->cub.so, &img);
+	load_image(info, info->texture[3], info->cub.no, &img);
+	load_image(info, info->texture[4], "imgs/DOOR_2A.xpm", &img);
+	load_image(info, info->texture[5], "imgs/CARD_1.xpm", &img);
+	load_image(info, info->texture[6], "imgs/CARD_2.xpm", &img);
+	load_image(info, info->texture[7], "imgs/CARD_3.xpm", &img);
+	load_image(info, info->texture[8], "imgs/CARD_4.xpm", &img);
 }
 
 void	set_info(t_info *info, int i, int j)
 {
-	t_img	img;
-
 	info->buff = ft_calloc(W_HEIGHT, sizeof(int *));
 	if (!info->buff)
 		puterr_msg("buff malloc error");
@@ -53,15 +47,12 @@ void	set_info(t_info *info, int i, int j)
 		if (!info->texture[j])
 			puterr_msg("texture malloc error");
 	}
-	load_image(info, info->texture[0], info->ea_path, &img);
-	load_image(info, info->texture[1], info->we_path, &img);
-	load_image(info, info->texture[2], info->so_path, &img);
-	load_image(info, info->texture[3], info->no_path, &img);
-	load_image(info, info->texture[4], "imgs/DOOR_2A.xpm", &img);
-	load_image(info, info->texture[5], "imgs/CARD_1.xpm", &img);
-	load_image(info, info->texture[6], "imgs/CARD_2.xpm", &img);
-	load_image(info, info->texture[7], "imgs/CARD_3.xpm", &img);
-	load_image(info, info->texture[8], "imgs/CARD_4.xpm", &img);
+	info->key_cnt = count_elem(info->map, 'K');
+	info->sprite = ft_calloc(info->key_cnt + 1, sizeof(t_sprite));
+	if (!info->sprite)
+		puterr_msg("sprite malloc error");
+	set_sprite(info->map, info->sprite);
+	load_texture(info);
 }
 
 int	mouse_move(t_info *info)
@@ -84,7 +75,7 @@ int	main_loop(t_info *info)
 {
 	draw_cell_floor(info, &info->main);
 	ray_casting(info);
-	sprite_ray_casting(info);
+	sprite(info);
 	draw_game(info);
 	mouse_move(info);
 	if (info->key_flag[0])
@@ -95,6 +86,8 @@ int	main_loop(t_info *info)
 		move_right(info);
 	if (info->key_flag[3])
 		move_left(info);
+	if (find_target(info->map, (int)info->p_x, (int)info->p_y) == -1)
+		take_card(info);
 	if (info->key_flag[4])
 		rotate_view(KEY_LEFT, info, ROTATE_SPEED);
 	if (info->key_flag[5])
@@ -102,7 +95,7 @@ int	main_loop(t_info *info)
 	if (info->map_sw)
 		minimap(info);
 	info->frame_cnt++;
-	if (info->frame_cnt == 2147483647)
+	if (info->frame_cnt == 40)
 		info->frame_cnt = 0;
 	return (0);
 }

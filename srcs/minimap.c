@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:17:18 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 11:47:32 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/13 15:31:40 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	draw_pixel_pos(t_img *minimap, int i, int j)
 		while (w_cnt)
 		{
 			if (!(w_cnt < 6 || w_cnt > MM_SIZE - 5
-				|| h_cnt < 6 || h_cnt > MM_SIZE - 5))
+					|| h_cnt < 6 || h_cnt > MM_SIZE - 5))
 				minimap->addr[i * minimap->width + j + cnt] = 0x60FFFF00;
 			cnt++;
 			w_cnt--;
@@ -98,7 +98,7 @@ void	draw_minimap(t_info *info, t_dlist *map, t_img *minimap)
 				draw_pixel(minimap, i, j, 0xA0FFFFFF);
 				if (map->line[j] == '1')
 					draw_pixel(minimap, i, j, 0xA0000000);
-				else if (map->line[j] == 'C')
+				else if (map->line[j] == 'C' || map->line[j] == 'c')
 					draw_pixel(minimap, i, j, 0xA0FF0000);
 				else if (map->line[j] == 'O')
 					draw_pixel(minimap, i, j, 0xA000FF00);

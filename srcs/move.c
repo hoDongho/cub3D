@@ -6,16 +6,11 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:51:43 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 11:52:39 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/13 14:05:35 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-double	test(double p)
-{
-	return (p - (int)p);
-}
 
 void	move_front(t_info *info)
 {

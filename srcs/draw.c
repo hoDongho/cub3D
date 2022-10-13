@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:52:50 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/12 00:03:08 by littley          ###   ########.fr       */
+/*   Updated: 2022/10/13 15:26:07 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	draw_cell_floor(t_info *info, t_img *img)
 	int	ceiling;
 	int	floor;
 
-	ceiling = set_color(info->ceiling_color);
-	floor = set_color(info->floor_color);
+	ceiling = set_color(info->cub.ceiling);
+	floor = set_color(info->cub.floor);
 	i = -1;
 	while (++i < W_HEIGHT)
 	{
