@@ -105,7 +105,7 @@ typedef struct s_info
 	int			**texture;
 	int			**buff;
 	int			key_flag[6];
-	int			z_buffer[W_WIDTH];
+	double		z_buffer[W_WIDTH];
 	t_cub		cub;
 	t_img		main;
 }				t_info;

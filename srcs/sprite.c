@@ -41,7 +41,7 @@ void	draw_sprite(t_info *info, t_sprite_tool *tool)
 		tool->tex_x = (i - (-tool->s_width / 2 + tool->s_screen_x)) \
 						* P_WIDTH / tool->s_width;
 		if (tool->t_y > 0 && i > 0 && i < W_WIDTH && \
-			(int)tool->t_y <= info->z_buffer[i])
+			tool->t_y < info->z_buffer[i])
 		{
 			j = tool->draw_start_y - 1;
 			while (++j < tool->draw_end_y)
