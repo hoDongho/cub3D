@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:17 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/13 15:56:12 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/13 20:23:37 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,29 @@
 
 # define PRESS 2
 # define RELEASE 3
-
-# define KEY_W 13
-# define KEY_A 0
-# define KEY_S 1
-# define KEY_D 2
-# define KEY_M 46
-# define KEY_LEFT 123
-# define KEY_RIGHT 124
-# define KEY_ESC 53
-# define KEY_SPACE 49
-# define RED_BUTTON 17
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_M 109
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+# define KEY_ESC 65307
+# define RED_BUTTON 79
+# define KEY_SPACE 32
 
 # define W_WIDTH 1600
 # define W_HEIGHT 900
 # define P_WIDTH 64
 # define P_HEIGHT 64
-# define MOVE_SPEED 0.035
-# define ROTATE_SPEED 0.03
+# define MOVE_SPEED 0.014
+# define ROTATE_SPEED 0.01
 
-# define MM_SIZE 25
+# define MM_SIZE 18
 
 # include <fcntl.h>
 # include <math.h>
-# include "../mlx/mlx.h"
+# include <mlx.h>
 # include "../libft/libft.h"
 # include "ray_casting.h"
 # include "sprite.h"
@@ -105,7 +104,7 @@ typedef struct s_info
 	int			**texture;
 	int			**buff;
 	int			key_flag[6];
-	int			z_buffer[W_WIDTH];
+	double		z_buffer[W_WIDTH];
 	t_cub		cub;
 	t_img		main;
 }				t_info;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: littley <littley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:08:00 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/13 16:16:58 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/13 19:23:56 by littley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	mouse_move(t_info *info)
 	int			x;
 	int			y;
 
-	mlx_mouse_get_pos(info->win, &x, &y);
+	mlx_mouse_get_pos(info->mlx, info->win, &x, &y);
 	if (y < 0 || y > W_HEIGHT)
 		return (0);
 	if (x > std_x + W_WIDTH / 4)
@@ -113,9 +113,9 @@ int	into_game(t_info *info)
 	info->main.addr = (int *)mlx_get_data_addr(info->main.img, &info->main.bpp,
 			&info->main.line_length, &info->main.endian);
 	mlx_loop_hook(info->mlx, &main_loop, info);
-	mlx_hook(info->win, PRESS, 0, &key_press, info);
-	mlx_hook(info->win, RELEASE, 0, &key_release, info);
-	mlx_hook(info->win, RED_BUTTON, 0, &exit_hook, info);
+	mlx_hook(info->win, PRESS, 1L << 0, &key_press, info);
+	mlx_hook(info->win, RELEASE, 1L << 1, &key_release, info);
+	mlx_hook(info->win, 33, 1L << 17, &exit_hook, info);
 	mlx_loop(info->mlx);
 	return (0);
 }
