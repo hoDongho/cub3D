@@ -82,6 +82,7 @@ typedef struct s_sprite
 {
 	double	x;
 	double	y;
+	int		id;
 }			t_sprite;
 
 typedef struct s_info

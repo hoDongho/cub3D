@@ -77,5 +77,7 @@ int	find_target(t_dlist *list, int x, int y)
 		return (tmp->line[x]);
 	else if (tmp->line[x] == 'K')
 		return (-1);
+	else if (tmp->line[x] == 'X')
+		return (-2);
 	return (0);
 }

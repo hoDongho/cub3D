@@ -18,9 +18,9 @@ __mlx를 활용한 간단한 게임 만들기__
 
 Ray-casting, sprite 원리에 대한 이해
 
-sprite 벽 통과 현상 해결
+~~sprite 벽 통과 현상 해결~~
 
-출구 구현
+~~출구 구현~~미완
 
 ------
 # Mandatory Part

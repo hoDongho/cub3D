@@ -29,7 +29,7 @@ void	init_data(t_info *info, t_sprite *sprite, t_sprite_data *data)
 							- info->dir_x * info->plane_y);
 }
 
-void	draw_sprite(t_info *info, t_sprite_tool *tool)
+void	draw_sprite(t_info *info, t_sprite *sprite, t_sprite_tool *tool)
 {
 	int				i;
 	int				j;
@@ -49,7 +49,12 @@ void	draw_sprite(t_info *info, t_sprite_tool *tool)
 				d = (j - tool->v_move_screen) * 256 - W_HEIGHT * \
 					128 + tool->s_height * 128;
 				tool->tex_y = ((d * P_HEIGHT) / tool->s_height) / 256;
-				tool->color = info->texture[5 + info->frame_cnt / 10 % 4] \
+				if (find_target(info->map, sprite->x, sprite->y) == -2 && info->access_cnt + 1 != info->key_cnt)
+					tool->color = info->texture[9][P_WIDTH * tool->tex_y + tool->tex_x];
+				else if (find_target(info->map, sprite->x, sprite->y) == -2 && info->access_cnt + 1 == info->key_cnt)
+					tool->color = info->texture[9 + info->frame_cnt / 10 % 4][P_WIDTH * tool->tex_y + tool->tex_x];
+				else
+					tool->color = info->texture[5 + info->frame_cnt / 10 % 4] \
 						[P_WIDTH * tool->tex_y + tool->tex_x];
 				if ((tool->color & 0x00FFFFFF) != 0)
 					info->buff[j][i] = tool->color;
@@ -105,7 +110,7 @@ int	sprite(t_info *info)
 	while (++i < info->key_cnt)
 	{
 		init_tool(info, &info->sprite[data.order[i]], &tool, &data);
-		draw_sprite(info, &tool);
+		draw_sprite(info, &info->sprite[data.order[i]], &tool);
 	}
 	free(data.order);
 	free(data.distance);

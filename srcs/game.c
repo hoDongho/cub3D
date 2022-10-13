@@ -25,6 +25,10 @@ void	load_texture(t_info *info)
 	load_image(info, info->texture[6], "imgs/CARD_2.xpm", &img);
 	load_image(info, info->texture[7], "imgs/CARD_3.xpm", &img);
 	load_image(info, info->texture[8], "imgs/CARD_4.xpm", &img);
+	load_image(info, info->texture[9], "imgs/EXIT_1.xpm", &img);
+	load_image(info, info->texture[10], "imgs/EXIT_2.xpm", &img);
+	load_image(info, info->texture[11], "imgs/EXIT_3.xpm", &img);
+	load_image(info, info->texture[12], "imgs/EXIT_4.xpm", &img);
 }
 
 void	set_info(t_info *info, int i, int j)
@@ -38,16 +42,16 @@ void	set_info(t_info *info, int i, int j)
 		if (!info->buff[i])
 			puterr_msg("buff malloc error");
 	}
-	info->texture = ft_calloc(9, sizeof(int *));
+	info->texture = ft_calloc(13, sizeof(int *));
 	if (!info->texture)
 		puterr_msg("texture malloc error");
-	while (++j < 9)
+	while (++j < 13)
 	{
 		info->texture[j] = ft_calloc(P_HEIGHT * P_WIDTH, sizeof(int));
 		if (!info->texture[j])
 			puterr_msg("texture malloc error");
 	}
-	info->key_cnt = count_elem(info->map, 'K');
+	info->key_cnt = count_elem(info->map, 'K') + 1;
 	info->sprite = ft_calloc(info->key_cnt + 1, sizeof(t_sprite));
 	if (!info->sprite)
 		puterr_msg("sprite malloc error");
