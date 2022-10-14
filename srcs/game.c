@@ -14,21 +14,20 @@
 
 void	load_texture(t_info *info)
 {
-	t_img	img;
 
-	load_image(info, info->texture[0], info->cub.ea, &img);
-	load_image(info, info->texture[1], info->cub.we, &img);
-	load_image(info, info->texture[2], info->cub.so, &img);
-	load_image(info, info->texture[3], info->cub.no, &img);
-	load_image(info, info->texture[4], "imgs/DOOR_2A.xpm", &img);
-	load_image(info, info->texture[5], "imgs/CARD_1.xpm", &img);
-	load_image(info, info->texture[6], "imgs/CARD_2.xpm", &img);
-	load_image(info, info->texture[7], "imgs/CARD_3.xpm", &img);
-	load_image(info, info->texture[8], "imgs/CARD_4.xpm", &img);
-	load_image(info, info->texture[9], "imgs/EXIT_1.xpm", &img);
-	load_image(info, info->texture[10], "imgs/EXIT_2.xpm", &img);
-	load_image(info, info->texture[11], "imgs/EXIT_3.xpm", &img);
-	load_image(info, info->texture[12], "imgs/EXIT_4.xpm", &img);
+	load_image(info, info->texture[0], info->cub.ea);
+	load_image(info, info->texture[1], info->cub.we);
+	load_image(info, info->texture[2], info->cub.so);
+	load_image(info, info->texture[3], info->cub.no);
+	load_image(info, info->texture[4], "imgs/DOOR_2A.xpm");
+	load_image(info, info->texture[5], "imgs/CARD_1.xpm");
+	load_image(info, info->texture[6], "imgs/CARD_2.xpm");
+	load_image(info, info->texture[7], "imgs/CARD_3.xpm");
+	load_image(info, info->texture[8], "imgs/CARD_4.xpm");
+	load_image(info, info->texture[9], "imgs/EXIT_1.xpm");
+	load_image(info, info->texture[10], "imgs/EXIT_2.xpm");
+	load_image(info, info->texture[11], "imgs/EXIT_3.xpm");
+	load_image(info, info->texture[12], "imgs/EXIT_4.xpm");
 }
 
 void	set_info(t_info *info, int i, int j)
@@ -51,8 +50,8 @@ void	set_info(t_info *info, int i, int j)
 		if (!info->texture[j])
 			puterr_msg("texture malloc error");
 	}
-	info->key_cnt = count_elem(info->map, 'K') + 1;
-	info->sprite = ft_calloc(info->key_cnt + 1, sizeof(t_sprite));
+	info->sprite_cnt = count_elem(info->map, 'K') + 1;
+	info->sprite = ft_calloc(info->sprite_cnt + 1, sizeof(t_sprite));
 	if (!info->sprite)
 		puterr_msg("sprite malloc error");
 	set_sprite(info->map, info->sprite);
@@ -82,20 +81,12 @@ int	main_loop(t_info *info)
 	sprite(info);
 	draw_game(info);
 	mouse_move(info);
-	if (info->key_flag[0])
-		move_front(info);
-	if (info->key_flag[1])
-		move_back(info);
-	if (info->key_flag[2])
-		move_right(info);
-	if (info->key_flag[3])
-		move_left(info);
+	key_move(info);
 	if (find_target(info->map, (int)info->p_x, (int)info->p_y) == -1)
 		take_card(info);
-	if (info->key_flag[4])
-		rotate_view(KEY_LEFT, info, ROTATE_SPEED);
-	if (info->key_flag[5])
-		rotate_view(KEY_RIGHT, info, ROTATE_SPEED);
+	if (find_target(info->map, (int)info->p_x, (int)info->p_y) == -2 \
+		&& info->access_cnt + 1 == info->sprite_cnt)
+		exit_hook(info);
 	if (info->map_sw)
 		minimap(info);
 	info->frame_cnt++;
@@ -107,7 +98,6 @@ int	main_loop(t_info *info)
 int	into_game(t_info *info)
 {
 	info->mlx = mlx_init();
-	mlx_do_key_autorepeatoff(info->mlx);
 	set_info(info, -1, -1);
 	set_info_dir(info);
 	info->win = mlx_new_window(info->mlx,

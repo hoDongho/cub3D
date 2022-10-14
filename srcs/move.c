@@ -59,3 +59,19 @@ void	move_left(t_info *info)
 			(int)(info->p_y - info->dir_x * MOVE_SPEED * 4)) <= 0)
 		info->p_y -= info->dir_x * MOVE_SPEED;
 }
+
+void	key_move(t_info *info)
+{
+	if (info->key_flag[0])
+		move_front(info);
+	if (info->key_flag[1])
+		move_back(info);
+	if (info->key_flag[2])
+		move_right(info);
+	if (info->key_flag[3])
+		move_left(info);
+	if (info->key_flag[4])
+		rotate_view(KEY_LEFT, info, ROTATE_SPEED);
+	if (info->key_flag[5])
+		rotate_view(KEY_RIGHT, info, ROTATE_SPEED);
+}

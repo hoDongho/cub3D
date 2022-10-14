@@ -18,15 +18,28 @@ void	init_data(t_info *info, t_sprite *sprite, t_sprite_data *data)
 	int	i;
 
 	i = -1;
-	while (++i < info->key_cnt)
+	while (++i < info->sprite_cnt)
 	{
 		data->order[i] = i;
 		data->distance[i] = pow((info->p_x - sprite[i].x), 2) \
 							+ pow((info->p_y - sprite[i].y), 2);
 	}
-	sort_sprites(data->order, data->distance, info->key_cnt);
+	sort_order(data, info->sprite_cnt);
 	data->inv_det = 1.0 / (info->plane_x * info->dir_y \
 							- info->dir_x * info->plane_y);
+}
+
+void	select_color(t_info *info, t_sprite *sprite, t_sprite_tool *tool)
+{
+	const int	texture_index = P_WIDTH * tool->tex_y + tool->tex_x;
+	int			texture_id;
+	const int	frame = info->frame_cnt / 10 % 4;
+
+	if (sprite->id == 2 && info->access_cnt + 1 == info->sprite_cnt)
+		texture_id = 9 + frame;
+	else
+		texture_id = 5 + frame;
+	tool->color = info->texture[texture_id][texture_index];
 }
 
 void	draw_sprite(t_info *info, t_sprite *sprite, t_sprite_tool *tool)
@@ -49,13 +62,7 @@ void	draw_sprite(t_info *info, t_sprite *sprite, t_sprite_tool *tool)
 				d = (j - tool->v_move_screen) * 256 - W_HEIGHT * \
 					128 + tool->s_height * 128;
 				tool->tex_y = ((d * P_HEIGHT) / tool->s_height) / 256;
-				if (find_target(info->map, sprite->x, sprite->y) == -2 && info->access_cnt + 1 != info->key_cnt)
-					tool->color = info->texture[9][P_WIDTH * tool->tex_y + tool->tex_x];
-				else if (find_target(info->map, sprite->x, sprite->y) == -2 && info->access_cnt + 1 == info->key_cnt)
-					tool->color = info->texture[9 + info->frame_cnt / 10 % 4][P_WIDTH * tool->tex_y + tool->tex_x];
-				else
-					tool->color = info->texture[5 + info->frame_cnt / 10 % 4] \
-						[P_WIDTH * tool->tex_y + tool->tex_x];
+				select_color(info, sprite, tool);
 				if ((tool->color & 0x00FFFFFF) != 0)
 					info->buff[j][i] = tool->color;
 			}
@@ -73,8 +80,8 @@ void	init_tool(t_info *info, t_sprite *sprite,
 	tool->t_y = data->inv_det * \
 				(-info->plane_y * tool->s_x + info->plane_x * tool->s_y);
 	tool->s_screen_x = (int)((W_WIDTH / 2) * (1 + tool->t_x / tool->t_y));
-	tool->v_move_screen = (int)(VMOVE / tool->t_y);
-	tool->s_height = (int)fabs((W_HEIGHT / tool->t_y) / VDIV);
+	tool->v_move_screen = (int)(VMOVE / tool->t_y) * abs((int)sprite->id - 2);
+	tool->s_height = (int)fabs((W_HEIGHT / tool->t_y) / VDIV * sprite->id);
 	tool->draw_start_y = -tool->s_height \
 						/ 2 + W_HEIGHT / 2 + tool->v_move_screen;
 	if (tool->draw_start_y < 0)
@@ -82,7 +89,7 @@ void	init_tool(t_info *info, t_sprite *sprite,
 	tool->draw_end_y = tool->s_height / 2 + W_HEIGHT / 2 + tool->v_move_screen;
 	if (tool->draw_end_y >= W_HEIGHT)
 		tool->draw_end_y = W_HEIGHT - 1;
-	tool->s_width = (int)fabs((W_HEIGHT / tool->t_y) / UDIV);
+	tool->s_width = (int)fabs((W_HEIGHT / tool->t_y) / UDIV * sprite->id);
 	tool->draw_start_x = -tool->s_width / 2 + tool->s_screen_x;
 	if (tool->draw_start_x < 0)
 		tool->draw_start_x = 0;
@@ -99,16 +106,19 @@ int	sprite(t_info *info)
 
 	ft_memset(&data, 0, sizeof(t_sprite_data));
 	ft_memset(&tool, 0, sizeof(t_sprite_tool));
-	data.order = ft_calloc(info->key_cnt, sizeof(int *));
+	data.order = ft_calloc(info->sprite_cnt, sizeof(int *));
 	if (!data.order)
 		puterr_msg("sprite malloc error");
-	data.distance = ft_calloc(info->key_cnt, sizeof(double *));
+	data.distance = ft_calloc(info->sprite_cnt, sizeof(double *));
 	if (!data.distance)
 		puterr_msg("sprite malloc error");
 	init_data(info, info->sprite, &data);
 	i = -1;
-	while (++i < info->key_cnt)
+	while (++i < info->sprite_cnt)
 	{
+		if (info->sprite[data.order[i]].id == 2 \
+			&& info->access_cnt + 1 != info->sprite_cnt)
+			continue ;
 		init_tool(info, &info->sprite[data.order[i]], &tool, &data);
 		draw_sprite(info, &info->sprite[data.order[i]], &tool);
 	}

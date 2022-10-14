@@ -124,5 +124,6 @@ int	minimap(t_info *info)
 					minimap.img, \
 					(W_WIDTH - minimap.width) / 2, \
 					(W_HEIGHT - minimap.height) / 2);
+	mlx_destroy_image(info->mlx, minimap.img);
 	return (0);
 }

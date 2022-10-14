@@ -15,7 +15,7 @@
 
 int	find_wall(t_info *info, t_ray *ray)
 {
-	while (ray->hit < 1)
+	while (ray->hit < 2)
 	{
 		if (ray->side_dist_x < ray->side_dist_y)
 		{

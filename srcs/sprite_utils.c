@@ -45,15 +45,20 @@ void	set_sprite(t_dlist *map, t_sprite *sprite)
 			{
 				sprite[++j].x = i + 0.5;
 				sprite[j].y = map->height + 0.5;
+				if (map->line[i] == 'K')
+					sprite[j].id = 1;
+				else
+					sprite[j].id = 2;
 			}
 		}
 		map = map->next;
 	}
 }
 
-void	sort_order(t_pair *orders, int amount)
+void	sort_order(t_sprite_data *data, int amount)
 {
-	t_pair	tmp;
+	double	tmp_distance;
+	int		tmp_order;
 	int		i;
 	int		j;
 
@@ -63,39 +68,17 @@ void	sort_order(t_pair *orders, int amount)
 		j = -1;
 		while (++j < amount - 1)
 		{
-			if (orders[j].first > orders[j + 1].first)
+			if (data->distance[j] < data->distance[j + 1])
 			{
-				tmp.first = orders[j].first;
-				tmp.second = orders[j].second;
-				orders[j].first = orders[j + 1].first;
-				orders[j].second = orders[j + 1].second;
-				orders[j + 1].first = tmp.first;
-				orders[j + 1].second = tmp.second;
+				tmp_distance = data->distance[j];
+				tmp_order = data->order[j];
+				data->distance[j] = data->distance[j + 1];
+				data->order[j] = data->order[j + 1];
+				data->distance[j + 1] = tmp_distance;
+				data->order[j + 1] = tmp_order;
 			}
 		}
 	}
-}
-
-void	sort_sprites(int *order, double *distance, int amount)
-{
-	t_pair	*pair;
-	int		i;
-
-	pair = (t_pair *)malloc(sizeof(t_pair) * amount);
-	i = -1;
-	while (++i < amount)
-	{
-		pair[i].first = distance[i];
-		pair[i].second = order[i];
-	}
-	sort_order(pair, amount);
-	i = -1;
-	while (++i < amount)
-	{
-		distance[i] = pair[amount - i - 1].first;
-		order[i] = pair[amount - i - 1].second;
-	}
-	free(pair);
 }
 
 void	take_card(t_info *info)
@@ -109,11 +92,11 @@ void	take_card(t_info *info)
 	tmp->line[(int)info->p_x] = '0';
 	info->access_cnt++;
 	i = -1;
-	while (++i < info->key_cnt)
+	while (++i < info->sprite_cnt)
 	{
 		if ((int)info->sprite[i].x == (int)info->p_x
 			&& (int)info->sprite[i].y == (int)info->p_y)
 			ft_memmove(&info->sprite[i], &info->sprite[i + 1], \
-			sizeof(t_sprite) * (info->key_cnt - i));
+			sizeof(t_sprite) * (info->sprite_cnt - i));
 	}
 }

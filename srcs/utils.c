@@ -79,21 +79,22 @@ char	*gnl_scan(int fd, int flag)
 	return (tmp);
 }
 
-void	load_image(t_info *info, int *texture, char *path, t_img *img)
+void	load_image(t_info *info, int *texture, char *path)
 {
-	int	x;
-	int	y;
+	t_img	img;
+	int		x;
+	int		y;
 
-	img->img = mlx_xpm_file_to_image(info->mlx, path,
-			&img->width, &img->height);
-	img->addr = (int *)mlx_get_data_addr(img->img, &img->bpp,
-			&img->line_length, &img->endian);
+	img.img = mlx_xpm_file_to_image(info->mlx, path,
+			&img.width, &img.height);
+	img.addr = (int *)mlx_get_data_addr(img.img, &img.bpp,
+			&img.line_length, &img.endian);
 	y = -1;
-	while (++y < img->height)
+	while (++y < img.height)
 	{
 		x = -1;
-		while (++x < img->width)
-			texture[img->width * y + x] = img->addr[img->width * y + x];
+		while (++x < img.width)
+			texture[img.width * y + x] = img.addr[img.width * y + x];
 	}
-	mlx_destroy_image(info->mlx, img->img);
+	mlx_destroy_image(info->mlx, img.img);
 }

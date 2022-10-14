@@ -43,10 +43,4 @@ typedef struct s_sprite_tool
 
 }	t_sprite_tool;
 
-typedef struct s_pair
-{
-	double	first;
-	int		second;
-}	t_pair;
-
 #endif

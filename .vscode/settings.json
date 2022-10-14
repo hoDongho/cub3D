@@ -22,6 +22,7 @@
 		"__config": "c",
 		"__node_handle": "c",
 		"cstdlib": "c",
-		"optional": "c"
+		"optional": "c",
+		"memory": "c"
 	}
 }
