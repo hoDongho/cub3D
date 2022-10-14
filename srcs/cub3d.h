@@ -97,7 +97,7 @@ typedef struct s_info
 	int			map_sw;
 	int			frame_cnt;
 	int			door_cnt;
-	int			key_cnt;
+	int			sprite_cnt;
 	int			access_cnt;
 	void		*mlx;
 	void		*win;
@@ -116,7 +116,7 @@ int		puterr_msg(char *str);
 int		free_info(t_info *info);
 char	*gnl_scan(int fd, int flag);
 int		set_color(char *str);
-void	load_image(t_info *info, int *texture, char *path, t_img *img);
+void	load_image(t_info *info, int *texture, char *path);
 
 // parser_utils.c
 int		ft_access(char *filename, int flag);
@@ -138,7 +138,6 @@ int		check_and_make_map(t_info *info, int fd);
 // game.c
 int		into_game(t_info *info);
 int		main_loop(t_info *info);
-void	load_image(t_info *info, int *texture, char *path, t_img *img);
 
 // sprite.c
 int		key_press(int keycode, t_info *info);
@@ -151,6 +150,7 @@ void	move_front(t_info *info);
 void	move_back(t_info *info);
 void	move_right(t_info *info);
 void	move_left(t_info *info);
+void	key_move(t_info *info);
 
 // draw.c
 void	draw_cell_floor(t_info *info, t_img *img);
@@ -179,8 +179,7 @@ int		count_elem(t_dlist *map, int c);
 // sprite_utils.c
 int		count_elem(t_dlist *map, int c);
 void	set_sprite(t_dlist *map, t_sprite *sprite);
-void	sort_sprites(int *order, double *distance, int amount);
-void	sort_order(t_pair *orders, int amount);
+void	sort_order(t_sprite_data *data, int amount);
 void	take_card(t_info *info);
 
 #endif
