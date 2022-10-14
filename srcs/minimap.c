@@ -83,20 +83,21 @@ void	draw_pixel_pos(t_img *minimap, int i, int j)
 
 void	draw_minimap(t_info *info, t_img *minimap, int i, int j)
 {
+	const int map_id = info->map->line[j];
 	draw_pixel(minimap, i, j, 0xFF000000);
 	if (j < info->map->width && info->map->line[j] != ' ')
 	{
-		if (info->map->line[j] == '0')
-			draw_pixel(minimap, i, j, 0xA0FFFFFF);
-		else if (info->map->line[j] == '1')
+		if (map_id == '1')
 			draw_pixel(minimap, i, j, 0xA0000000);
-		else if (info->map->line[j] == 'C' || info->map->line[j] == 'c')
+		else if (map_id == 'C' || map_id == 'c')
 			draw_pixel(minimap, i, j, 0xA0FF0000);
-		else if (info->map->line[j] == 'O')
+		else if (map_id == 'O')
 			draw_pixel(minimap, i, j, 0xA000FF00);
-		else if (info->map->line[j] == 'X'
+		else if (map_id == 'X'
 			&& info->access_cnt + 1 == info->sprite_cnt)
 			draw_pixel(minimap, i, j, 0xA00000FF);
+		else
+			draw_pixel(minimap, i, j, 0xA0FFFFFF);
 		if (i == (int)info->p_y && j == (int)info->p_x)
 			draw_pixel_pos(minimap, i, j);
 	}
