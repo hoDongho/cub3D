@@ -13,20 +13,31 @@
 #include "cub3d.h"
 #include "sprite.h"
 
-void	init_data(t_info *info, t_sprite *sprite, t_sprite_data *data)
+void	sort_sprite(t_info *info, t_sprite *sprite)
 {
-	int	i;
+	int			i;
+	int			j;
+	int			k;
+	t_sprite	tmp;
 
 	i = -1;
 	while (++i < info->sprite_cnt)
-	{
-		data->order[i] = i;
-		data->distance[i] = pow((info->p_x - sprite[i].x), 2) \
+		sprite->distance = pow((info->p_x - sprite[i].x), 2) \
 							+ pow((info->p_y - sprite[i].y), 2);
+	k = -1;
+	while (++k < info->sprite_cnt)
+	{
+		j = -1;
+		while (++j < info->sprite_cnt - 1)
+		{
+			if (sprite[j].distance < sprite[j + 1].distance)
+			{
+				tmp = sprite[j];
+				sprite[j] = sprite[j + 1];
+				sprite[j + 1] = tmp;
+			}
+		}
 	}
-	sort_order(data, info->sprite_cnt);
-	data->inv_det = 1.0 / (info->plane_x * info->dir_y \
-							- info->dir_x * info->plane_y);
 }
 
 void	select_color(t_info *info, t_sprite *sprite, t_sprite_tool *tool)
@@ -70,14 +81,13 @@ void	draw_sprite(t_info *info, t_sprite *sprite, t_sprite_tool *tool)
 	}
 }
 
-void	init_tool(t_info *info, t_sprite *sprite,
-	t_sprite_tool *tool, t_sprite_data *data)
+void	init_tool(t_info *info, t_sprite *sprite, t_sprite_tool *tool)
 {
 	tool->s_x = sprite->x - info->p_x;
 	tool->s_y = sprite->y - info->p_y;
-	tool->t_x = data->inv_det * \
+	tool->t_x = tool->inv_det * \
 				(info->dir_y * tool->s_x - info->dir_x * tool->s_y);
-	tool->t_y = data->inv_det * \
+	tool->t_y = tool->inv_det * \
 				(-info->plane_y * tool->s_x + info->plane_x * tool->s_y);
 	tool->s_screen_x = (int)((W_WIDTH / 2) * (1 + tool->t_x / tool->t_y));
 	tool->v_move_screen = (int)(VMOVE / tool->t_y) * abs((int)sprite->id - 2);
@@ -100,29 +110,21 @@ void	init_tool(t_info *info, t_sprite *sprite,
 
 int	sprite(t_info *info)
 {
-	t_sprite_data	data;
 	t_sprite_tool	tool;
 	int				i;
 
-	ft_memset(&data, 0, sizeof(t_sprite_data));
 	ft_memset(&tool, 0, sizeof(t_sprite_tool));
-	data.order = ft_calloc(info->sprite_cnt, sizeof(int *));
-	if (!data.order)
-		puterr_msg("sprite malloc error");
-	data.distance = ft_calloc(info->sprite_cnt, sizeof(double *));
-	if (!data.distance)
-		puterr_msg("sprite malloc error");
-	init_data(info, info->sprite, &data);
+	sort_sprite(info, info->sprite);
+	tool.inv_det = 1.0 / (info->plane_x * info->dir_y \
+							- info->dir_x * info->plane_y);
 	i = -1;
 	while (++i < info->sprite_cnt)
 	{
-		if (info->sprite[data.order[i]].id == 2 \
+		if (info->sprite[i].id == 2 \
 			&& info->access_cnt + 1 != info->sprite_cnt)
 			continue ;
-		init_tool(info, &info->sprite[data.order[i]], &tool, &data);
-		draw_sprite(info, &info->sprite[data.order[i]], &tool);
+		init_tool(info, &info->sprite[i], &tool);
+		draw_sprite(info, &info->sprite[i], &tool);
 	}
-	free(data.order);
-	free(data.distance);
 	return (0);
 }

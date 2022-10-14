@@ -81,47 +81,50 @@ void	draw_pixel_pos(t_img *minimap, int i, int j)
 	}
 }
 
-void	draw_minimap(t_info *info, t_dlist *map, t_img *minimap)
+void	draw_minimap(t_info *info, t_img *minimap, int i, int j)
 {
-	int	i;
-	int	j;
-
-	i = -1;
-	while (++i < minimap->height / MM_SIZE)
+	draw_pixel(minimap, i, j, 0xFF000000);
+	if (j < info->map->width && info->map->line[j] != ' ')
 	{
-		j = -1;
-		while (++j < minimap->width / MM_SIZE)
-		{
-			draw_pixel(minimap, i, j, 0xFF000000);
-			if (j < map->width && map->line[j] != ' ')
-			{
-				draw_pixel(minimap, i, j, 0xA0FFFFFF);
-				if (map->line[j] == '1')
-					draw_pixel(minimap, i, j, 0xA0000000);
-				else if (map->line[j] == 'C' || map->line[j] == 'c')
-					draw_pixel(minimap, i, j, 0xA0FF0000);
-				else if (map->line[j] == 'O')
-					draw_pixel(minimap, i, j, 0xA000FF00);
-				if (i == (int)info->p_y && j == (int)info->p_x)
-					draw_pixel_pos(minimap, i, j);
-			}
-		}
-		map = map->next;
+		if (info->map->line[j] == '0')
+			draw_pixel(minimap, i, j, 0xA0FFFFFF);
+		else if (info->map->line[j] == '1')
+			draw_pixel(minimap, i, j, 0xA0000000);
+		else if (info->map->line[j] == 'C' || info->map->line[j] == 'c')
+			draw_pixel(minimap, i, j, 0xA0FF0000);
+		else if (info->map->line[j] == 'O')
+			draw_pixel(minimap, i, j, 0xA000FF00);
+		else if (info->map->line[j] == 'X'
+			&& info->access_cnt + 1 == info->sprite_cnt)
+			draw_pixel(minimap, i, j, 0xA00000FF);
+		if (i == (int)info->p_y && j == (int)info->p_x)
+			draw_pixel_pos(minimap, i, j);
 	}
 }
 
 int	minimap(t_info *info)
 {
 	t_img	minimap;
+	t_dlist	*origin;
+	int		i;
+	int		j;
 
 	ft_memset(&minimap, 0, sizeof(t_img));
 	set_size(info->map, &minimap.width, &minimap.height);
 	minimap.img = mlx_new_image(info->mlx, minimap.width, minimap.height);
 	minimap.addr = (int *)mlx_get_data_addr(minimap.img, \
 					&minimap.bpp, &minimap.line_length, &minimap.endian);
-	draw_minimap(info, info->map, &minimap);
-	mlx_put_image_to_window(info->mlx, info->win, \
-					minimap.img, \
+	origin = info->map;
+	i = -1;
+	while (++i < minimap.height / MM_SIZE)
+	{
+		j = -1;
+		while (++j < minimap.width / MM_SIZE)
+			draw_minimap(info, &minimap, i, j);
+		info->map = info->map->next;
+	}
+	info->map = origin;
+	mlx_put_image_to_window(info->mlx, info->win, minimap.img, \
 					(W_WIDTH - minimap.width) / 2, \
 					(W_HEIGHT - minimap.height) / 2);
 	mlx_destroy_image(info->mlx, minimap.img);

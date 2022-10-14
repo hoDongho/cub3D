@@ -55,32 +55,6 @@ void	set_sprite(t_dlist *map, t_sprite *sprite)
 	}
 }
 
-void	sort_order(t_sprite_data *data, int amount)
-{
-	double	tmp_distance;
-	int		tmp_order;
-	int		i;
-	int		j;
-
-	i = -1;
-	while (++i < amount)
-	{
-		j = -1;
-		while (++j < amount - 1)
-		{
-			if (data->distance[j] < data->distance[j + 1])
-			{
-				tmp_distance = data->distance[j];
-				tmp_order = data->order[j];
-				data->distance[j] = data->distance[j + 1];
-				data->order[j] = data->order[j + 1];
-				data->distance[j + 1] = tmp_distance;
-				data->order[j + 1] = tmp_order;
-			}
-		}
-	}
-}
-
 void	take_card(t_info *info)
 {
 	t_dlist	*tmp;

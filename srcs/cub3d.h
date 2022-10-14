@@ -57,7 +57,7 @@ typedef struct s_img
 	int		bpp;
 	int		line_length;
 	int		endian;
-}			t_img;
+}	t_img;
 
 typedef struct s_dlist
 {
@@ -66,7 +66,7 @@ typedef struct s_dlist
 	char			*line;
 	int				width;
 	int				height;
-}					t_dlist;
+}	t_dlist;
 
 typedef struct s_cub
 {
@@ -76,14 +76,15 @@ typedef struct s_cub
 	char	*ea;
 	char	*floor;
 	char	*ceiling;
-}			t_cub;
+}	t_cub;
 
 typedef struct s_sprite
 {
 	double	x;
 	double	y;
+	double	distance;
 	int		id;
-}			t_sprite;
+}	t_sprite;
 
 typedef struct s_info
 {
@@ -96,7 +97,6 @@ typedef struct s_info
 	int			start_dir;
 	int			map_sw;
 	int			frame_cnt;
-	int			door_cnt;
 	int			sprite_cnt;
 	int			access_cnt;
 	void		*mlx;
@@ -109,7 +109,7 @@ typedef struct s_info
 	double		z_buffer[W_WIDTH];
 	t_cub		cub;
 	t_img		main;
-}				t_info;
+}	t_info;
 
 // utils.c
 int		puterr_msg(char *str);
@@ -121,7 +121,7 @@ void	load_image(t_info *info, int *texture, char *path);
 // parser_utils.c
 int		ft_access(char *filename, int flag);
 void	cali_info(t_info *info);
-int		check_rgb(char *rgb, int i, int ret);
+int		check_rgb(char *rgb);
 
 // doubly_list.c
 t_dlist	*create_list(void);
@@ -179,7 +179,6 @@ int		count_elem(t_dlist *map, int c);
 // sprite_utils.c
 int		count_elem(t_dlist *map, int c);
 void	set_sprite(t_dlist *map, t_sprite *sprite);
-void	sort_order(t_sprite_data *data, int amount);
 void	take_card(t_info *info);
 
 #endif

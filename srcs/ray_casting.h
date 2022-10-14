@@ -25,7 +25,7 @@ typedef struct s_draw
 	double	wall_x;
 	double	step;
 	double	tex_pos;
-}			t_draw;
+}	t_draw;
 
 typedef struct s_ray
 {
@@ -43,6 +43,6 @@ typedef struct s_ray
 	double	delta_dist_x;
 	double	delta_dist_y;
 	double	perp_wall_dist;
-}			t_ray;
+}	t_ray;
 
 #endif

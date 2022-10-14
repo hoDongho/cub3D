@@ -11,11 +11,9 @@
 # **************************************************************************** #
 
 NAME = cub3d
-NAME_BONUS = cub3d_bonus
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-DFLAG = -g2 -fsanitize=address
 FRAMEWORK = -framework OpenGL -framework AppKit
 RM = rm -f
 
@@ -30,9 +28,11 @@ SRC =	main.c parser.c utils.c parser_utils.c doubly_list.c map.c door.c \
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 OBJS = $(SRCS:.c=.o)
 
-OBJS_BONUS = $(SRCS_BONUS:.c=.o)
-
 HEADER = srcs/cub3d.h srcs/ray_casting.h srcs/sprite.h
+
+ifdef DFLAG
+	CFLAGS += -g2 -fsanitize=address
+endif
 
 all : $(NAME)
 
@@ -40,6 +40,10 @@ $(NAME) : $(OBJS)
 	@make -C $(MLXDIR)
 	@make -C $(LIBDIR)
 	@$(CC) $(CFLAGS) -Imlx/ -L$(MLXDIR) -lmlx -L$(LIBDIR) -lft $(FRAMEWORK) $^ -o $@
+
+debug:
+	@make fclean
+	@make DFLAG=1 all
 
 %.o : %.c
 	@$(CC) $(CFLAGS) -Imlx -c $< -o $@
@@ -52,19 +56,14 @@ clean :
 fclean :
 	@make clean -C $(MLXDIR)
 	@make fclean -C $(LIBDIR)
-	@$(RM) $(OBJS) $(OBJS_BONUS) $(NAME) $(NAME_BONUS)
+	@$(RM) $(OBJS) $(OBJS_BONUS) $(NAME)
 
 re :
 	@make fclean
 	@make all
 
-bonus : $(NAME_BONUS)
+bonus : all
 
 $(OBJS) : $(HEADER)
-
-$(NAME_BONUS) : $(OBJS_BONUS)
-	@make -C $(MLXDIR)
-	@make -C $(LIBDIR)
-	@$(CC) $(CFLAGS) -L$(MLXDIR) -lmlx -L$(LIBDIR) -lft $(FRAMEWORK) $^ -o $@
 
 .PHONY : all bonus clean fclean re

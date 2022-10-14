@@ -14,7 +14,6 @@
 
 void	load_texture(t_info *info)
 {
-
 	load_image(info, info->texture[0], info->cub.ea);
 	load_image(info, info->texture[1], info->cub.we);
 	load_image(info, info->texture[2], info->cub.so);

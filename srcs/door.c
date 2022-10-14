@@ -23,8 +23,9 @@ int	check_door(t_dlist *now, int i)
 
 void	change_target(t_info *info, int x, int y)
 {
-	t_dlist	*tmp;
-	int		i;
+	t_dlist		*tmp;
+	static int	door_cnt;
+	int			i;
 
 	tmp = info->map;
 	i = 0;
@@ -36,9 +37,9 @@ void	change_target(t_info *info, int x, int y)
 		tmp->line[x] = 'O';
 	else if (tmp->line[x] == 'C' && info->access_cnt)
 	{
-		if (info->door_cnt < info->access_cnt)
-			info->door_cnt++;
-		else if (info->door_cnt == info->access_cnt)
+		if (door_cnt < info->access_cnt)
+			door_cnt++;
+		else if (door_cnt == info->access_cnt)
 			return ;
 		tmp->line[x] = 'O';
 	}

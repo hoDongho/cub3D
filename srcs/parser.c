@@ -69,14 +69,14 @@ static int	check_basic(t_info *info, int fd)
 	}
 	if (check == -1)
 		return (puterr_msg("invalid basic info"));
-	add_list(&info->map, tmp, 0);
 	if ((ft_access(ft_strchr(info->cub.no, '.'), C_CLOSE) == ERROR
 			|| ft_access(ft_strchr(info->cub.so, '.'), C_CLOSE) == ERROR
 			|| ft_access(ft_strchr(info->cub.ea, '.'), C_CLOSE) == ERROR
 			|| ft_access(ft_strchr(info->cub.we, '.'), C_CLOSE) == ERROR
-			|| check_rgb(info->cub.floor, 0, 0) == ERROR
-			|| check_rgb(info->cub.ceiling, 0, 0) == ERROR))
+			|| check_rgb(info->cub.floor) == ERROR
+			|| check_rgb(info->cub.ceiling) == ERROR))
 		return (puterr_msg("invalid basic info"));
+	add_list(&info->map, tmp, 0);
 	return (0);
 }
 

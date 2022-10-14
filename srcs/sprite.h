@@ -16,15 +16,9 @@
 # define VDIV 2.5
 # define VMOVE 200.0
 
-typedef struct s_sprite_data
-{
-	double	inv_det;
-	int		*order;
-	double	*distance;
-}	t_sprite_data;
-
 typedef struct s_sprite_tool
 {
+	double			inv_det;
 	double			s_x;
 	double			s_y;
 	double			t_x;
@@ -40,7 +34,6 @@ typedef struct s_sprite_tool
 	int				tex_y;
 	int				v_move_screen;
 	unsigned int	color;
-
 }	t_sprite_tool;
 
 #endif

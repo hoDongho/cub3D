@@ -66,7 +66,7 @@ static int	check_up_down(char *line)
 
 static int	check_map(t_info *info, t_dlist *now, int start_flag)
 {
-	int		i;
+	int	i;
 
 	check_up_down(now->line);
 	now = now->next;
