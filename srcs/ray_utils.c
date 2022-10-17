@@ -18,22 +18,22 @@ void	set_info_dir(t_info *info)
 	if (info->start_dir == 'E')
 	{
 		info->dir_x = 1;
-		info->plane_y = 0.99;
+		info->plane_y = 0.80;
 	}
 	else if (info->start_dir == 'W')
 	{
 		info->dir_x = -1;
-		info->plane_y = -0.99;
+		info->plane_y = -0.80;
 	}
 	else if (info->start_dir == 'S')
 	{
 		info->dir_y = 1;
-		info->plane_x = -0.99;
+		info->plane_x = -0.80;
 	}
 	else if (info->start_dir == 'N')
 	{
 		info->dir_y = -1;
-		info->plane_x = 0.99;
+		info->plane_x = 0.80;
 	}
 }
 
@@ -72,4 +72,27 @@ void	init_ray(t_info *info, t_ray *ray, int x)
 	ray->map_y = (int)info->p_y;
 	init_step(info, ray);
 	ray->hit = 0;
+}
+
+void	draw_cell_floor(t_info *info, t_img *img)
+{
+	int	i;
+	int	j;
+	int	ceiling;
+	int	floor;
+
+	ceiling = set_color(info->cub.ceiling);
+	floor = set_color(info->cub.floor);
+	i = -1;
+	while (++i < W_HEIGHT)
+	{
+		j = -1;
+		while (++j < W_WIDTH)
+		{
+			if (i < W_HEIGHT / 2)
+				img->addr[i * W_WIDTH + j] = ceiling;
+			if (i >= W_HEIGHT / 2)
+				img->addr[i * W_WIDTH + j] = floor;
+		}
+	}
 }

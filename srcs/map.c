@@ -108,5 +108,7 @@ int	check_and_make_map(t_info *info, int fd)
 	}
 	now = info->map;
 	check_map(info, now, 0);
+	if (!count_elem(info->map, 'X'))
+		puterr_msg("map error!");
 	return (0);
 }

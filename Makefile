@@ -22,7 +22,7 @@ LIBDIR = libft/
 SRC_DIR = srcs/
 
 SRC =	main.c parser.c utils.c parser_utils.c doubly_list.c map.c door.c \
-		game.c key.c ray_casting.c ray_utils.c minimap.c move.c draw.c sprite.c \
+		game.c key.c ray_casting.c ray_utils.c minimap.c move.c sprite.c \
 		sprite_utils.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))

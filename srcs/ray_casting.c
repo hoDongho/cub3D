@@ -70,12 +70,12 @@ void	init_draw(t_info *info, t_ray *ray, t_draw *draw)
 	else
 		draw->wall_x = info->p_x + ray->perp_wall_dist * ray->dir_x;
 	draw->wall_x -= floor(draw->wall_x);
-	draw->tex_x = (int)(draw->wall_x * (double)P_WIDTH);
+	draw->tex_x = (int)(draw->wall_x * P_WIDTH);
 	if (ray->side == 0 && ray->dir_x > 0)
 		draw->tex_x = P_WIDTH - draw->tex_x - 1;
 	if (ray->side == 1 && ray->dir_y < 0)
 		draw->tex_x = P_WIDTH - draw->tex_x - 1;
-	draw->step = 1.0 * P_HEIGHT / draw->line_height;
+	draw->step = (double)P_HEIGHT / draw->line_height;
 	draw->tex_pos = (draw->start - W_HEIGHT / 2 + draw->line_height / 2)
 		* draw->step;
 }
@@ -89,15 +89,14 @@ int	draw_texture_to_img(t_info *info, t_ray *ray, int x)
 	while (draw.start < draw.end)
 	{
 		draw.tex_y = (int)draw.tex_pos & (P_HEIGHT - 1);
-		draw.tex_pos += draw.step;
 		draw.color = info->texture[draw.tex_num]
 		[P_HEIGHT * draw.tex_y + draw.tex_x];
 		if (ray->side == 1)
 			draw.color = (draw.color >> 1) & 8355711;
-		info->buff[draw.start][x] = draw.color;
+		info->main.addr[draw.start * W_WIDTH + x] = draw.color;
+		draw.tex_pos += draw.step;
 		draw.start++;
 	}
-	info->z_buffer[x] = ray->perp_wall_dist;
 	return (0);
 }
 
@@ -114,6 +113,7 @@ int	ray_casting(t_info *info)
 		if (find_wall(info, &ray))
 			continue ;
 		draw_texture_to_img(info, &ray, x);
+		info->z_buffer[x] = ray.perp_wall_dist;
 	}
 	return (0);
 }

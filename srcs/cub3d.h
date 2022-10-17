@@ -104,7 +104,6 @@ typedef struct s_info
 	t_dlist		*map;
 	t_sprite	*sprite;
 	int			**texture;
-	int			**buff;
 	int			key_flag[6];
 	double		z_buffer[W_WIDTH];
 	t_cub		cub;
@@ -152,10 +151,6 @@ void	move_right(t_info *info);
 void	move_left(t_info *info);
 void	key_move(t_info *info);
 
-// draw.c
-void	draw_cell_floor(t_info *info, t_img *img);
-void	draw_game(t_info *info);
-
 // ray_casting.c
 int		ray_casting(t_info *info);
 void	init_draw(t_info *info, t_ray *ray, t_draw *draw);
@@ -164,6 +159,7 @@ void	init_draw(t_info *info, t_ray *ray, t_draw *draw);
 void	set_info_dir(t_info *info);
 void	init_ray(t_info *info, t_ray *ray, int x);
 void	init_step(t_info *info, t_ray *ray);
+void	draw_cell_floor(t_info *info, t_img *img);
 
 // minimap.c
 int		minimap(t_info *info);

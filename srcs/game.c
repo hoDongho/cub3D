@@ -31,15 +31,7 @@ void	load_texture(t_info *info)
 
 void	set_info(t_info *info, int i, int j)
 {
-	info->buff = ft_calloc(W_HEIGHT, sizeof(int *));
-	if (!info->buff)
-		puterr_msg("buff malloc error");
-	while (++i < W_HEIGHT)
-	{
-		info->buff[i] = ft_calloc(W_WIDTH, sizeof(int));
-		if (!info->buff[i])
-			puterr_msg("buff malloc error");
-	}
+	(void)i;
 	info->texture = ft_calloc(13, sizeof(int *));
 	if (!info->texture)
 		puterr_msg("texture malloc error");
@@ -49,7 +41,7 @@ void	set_info(t_info *info, int i, int j)
 		if (!info->texture[j])
 			puterr_msg("texture malloc error");
 	}
-	info->sprite_cnt = count_elem(info->map, 'K') + 1;
+	info->sprite_cnt = count_elem(info->map, 'K') + count_elem(info->map, 'X');
 	info->sprite = ft_calloc(info->sprite_cnt + 1, sizeof(t_sprite));
 	if (!info->sprite)
 		puterr_msg("sprite malloc error");
@@ -75,11 +67,10 @@ int	mouse_move(t_info *info)
 
 int	main_loop(t_info *info)
 {
-	mlx_clear_window(info->mlx, info->win);
 	draw_cell_floor(info, &info->main);
 	ray_casting(info);
 	sprite(info);
-	draw_game(info);
+	mlx_put_image_to_window(info->mlx, info->win, info->main.img, 0, 0);
 	mouse_move(info);
 	key_move(info);
 	if (find_target(info->map, (int)info->p_x, (int)info->p_y) == -1)
