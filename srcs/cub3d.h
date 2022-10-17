@@ -32,8 +32,8 @@
 # define KEY_SPACE 49
 # define RED_BUTTON 17
 
-# define W_WIDTH 800
-# define W_HEIGHT 600
+# define W_WIDTH 1200
+# define W_HEIGHT 720
 # define P_WIDTH 64
 # define P_HEIGHT 64
 # define MOVE_SPEED 0.035

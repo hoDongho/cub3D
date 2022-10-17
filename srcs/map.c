@@ -31,10 +31,9 @@ static int	check_space(t_dlist *map, int index)
 
 static int	check_elem(t_info *info, t_dlist *now, int i, int *flag)
 {
-	if (now->line[i] != '1' && now->line[i] != '0' && now->line[i] != ' '
+	if (now->line[i] != '1' && now->line[i] != '0' && now->line[i] != 'X'
 		&& now->line[i] != 'N' && now->line[i] != 'S' && now->line[i] != 'K'
-		&& now->line[i] != 'E' && now->line[i] != 'W' && now->line[i] != 'C'
-		&& now->line[i] != 'X')
+		&& now->line[i] != 'E' && now->line[i] != 'W' && now->line[i] != 'C')
 		return (puterr_msg("map error!"));
 	if ((now->line[i] == 'N' || now->line[i] == 'S'
 			|| now->line[i] == 'E' || now->line[i] == 'W'))

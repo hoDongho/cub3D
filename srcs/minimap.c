@@ -83,7 +83,8 @@ void	draw_pixel_pos(t_img *minimap, int i, int j)
 
 void	draw_minimap(t_info *info, t_img *minimap, int i, int j)
 {
-	const int map_id = info->map->line[j];
+	const int	map_id = info->map->line[j];
+
 	draw_pixel(minimap, i, j, 0xFF000000);
 	if (j < info->map->width && info->map->line[j] != ' ')
 	{

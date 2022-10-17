@@ -78,7 +78,6 @@ int	check_rgb(char *rgb)
 	return (ret);
 }
 
-	#include <stdio.h>
 void	cali_info(t_info *info)
 {
 	char	*tmp;

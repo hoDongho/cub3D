@@ -75,6 +75,7 @@ int	mouse_move(t_info *info)
 
 int	main_loop(t_info *info)
 {
+	mlx_clear_window(info->mlx, info->win);
 	draw_cell_floor(info, &info->main);
 	ray_casting(info);
 	sprite(info);
@@ -105,10 +106,10 @@ int	into_game(t_info *info)
 			W_WIDTH, W_HEIGHT);
 	info->main.addr = (int *)mlx_get_data_addr(info->main.img, &info->main.bpp,
 			&info->main.line_length, &info->main.endian);
-	mlx_loop_hook(info->mlx, &main_loop, info);
 	mlx_hook(info->win, PRESS, 0, &key_press, info);
 	mlx_hook(info->win, RELEASE, 0, &key_release, info);
 	mlx_hook(info->win, RED_BUTTON, 0, &exit_hook, info);
+	mlx_loop_hook(info->mlx, &main_loop, info);
 	mlx_loop(info->mlx);
 	return (0);
 }
