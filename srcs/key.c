@@ -35,33 +35,19 @@ void	press_move(int keycode, t_info *info)
 		info->key_flag[5] = 1;
 }
 
-void	rotate_view(int keycode, t_info *info, double rotate)
+void	rotate_view(t_info *info, double rotate)
 {
 	const double	old_dir_x = info->dir_x;
 	const double	old_plane_x = info->plane_x;
 
-	if (keycode == KEY_RIGHT)
-	{
-		info->dir_x = info->dir_x * cos(rotate) \
-						- info->dir_y * sin(rotate);
-		info->dir_y = old_dir_x * sin(rotate) \
-						+ info->dir_y * cos(rotate);
-		info->plane_x = info->plane_x * cos(rotate) \
-						- info->plane_y * sin(rotate);
-		info->plane_y = old_plane_x * sin(rotate) \
-						+ info->plane_y * cos(rotate);
-	}
-	else if (keycode == KEY_LEFT)
-	{
-		info->dir_x = info->dir_x * cos(-rotate) \
-						- info->dir_y * sin(-rotate);
-		info->dir_y = old_dir_x * sin(-rotate) \
-						+ info->dir_y * cos(-rotate);
-		info->plane_x = info->plane_x * cos(-rotate) \
-						- info->plane_y * sin(-rotate);
-		info->plane_y = old_plane_x * sin(-rotate) \
-						+ info->plane_y * cos(-rotate);
-	}
+	info->dir_x = info->dir_x * cos(rotate) \
+					- info->dir_y * sin(rotate);
+	info->dir_y = old_dir_x * sin(rotate) \
+					+ info->dir_y * cos(rotate);
+	info->plane_x = info->plane_x * cos(rotate) \
+					- info->plane_y * sin(rotate);
+	info->plane_y = old_plane_x * sin(rotate) \
+					+ info->plane_y * cos(rotate);
 }
 
 int	key_release(int keycode, t_info *info)

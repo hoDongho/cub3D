@@ -80,7 +80,7 @@ void	draw_sprite(t_info *info, t_sprite *sprite, t_sprite_tool *tool)
 		}
 	}
 }
-#include <stdio.h>
+
 void	init_tool(t_info *info, t_sprite *sprite, t_sprite_tool *tool)
 {
 	tool->s_x = sprite->x - info->p_x;
@@ -90,8 +90,7 @@ void	init_tool(t_info *info, t_sprite *sprite, t_sprite_tool *tool)
 	tool->t_y = tool->inv_det * \
 				(-info->plane_y * tool->s_x + info->plane_x * tool->s_y);
 	tool->s_screen_x = (int)((W_WIDTH / 2) * (1 + tool->t_x / tool->t_y));
-	printf("%f %d\n", tool->t_x / tool->t_y, tool->s_screen_x);
-	tool->v_move_screen = (int)(VMOVE / tool->t_y) * abs((int)sprite->id - 2);
+	tool->v_move_screen = (int)(VMOVE / tool->t_y) * (2 - (int)sprite->id);
 	tool->s_height = (int)fabs((W_HEIGHT / tool->t_y) / VDIV * sprite->id);
 	tool->draw_start_y = -tool->s_height \
 						/ 2 + W_HEIGHT / 2 + tool->v_move_screen;

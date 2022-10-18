@@ -71,7 +71,7 @@ void	key_move(t_info *info)
 	if (info->key_flag[3])
 		move_left(info);
 	if (info->key_flag[4])
-		rotate_view(KEY_LEFT, info, ROTATE_SPEED);
+		rotate_view(info, -ROTATE_SPEED);
 	if (info->key_flag[5])
-		rotate_view(KEY_RIGHT, info, ROTATE_SPEED);
+		rotate_view(info, ROTATE_SPEED);
 }

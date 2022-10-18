@@ -142,7 +142,7 @@ int		main_loop(t_info *info);
 int		key_press(int keycode, t_info *info);
 int		key_release(int keycode, t_info *info);
 int		exit_hook(t_info *info);
-void	rotate_view(int keycode, t_info *info, double rotate);
+void	rotate_view(t_info *info, double rotate);
 
 // move.c
 void	move_front(t_info *info);

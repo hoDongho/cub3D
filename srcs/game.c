@@ -59,9 +59,9 @@ int	mouse_move(t_info *info)
 	if (y < 0 || y > W_HEIGHT)
 		return (0);
 	if (x > std_x + W_WIDTH / 4)
-		rotate_view(KEY_RIGHT, info, ROTATE_SPEED / 500 * abs(std_x - x));
+		rotate_view(info, ROTATE_SPEED / 500 * abs(std_x - x));
 	else if (x < std_x - W_WIDTH / 4)
-		rotate_view(KEY_LEFT, info, ROTATE_SPEED / 500 * abs(std_x - x));
+		rotate_view(info, -ROTATE_SPEED / 500 * abs(std_x - x));
 	return (0);
 }
 
