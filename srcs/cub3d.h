@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:13:17 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/13 15:56:12 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/18 12:13:32 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 # define KEY_SPACE 49
 # define RED_BUTTON 17
 
-# define W_WIDTH 1200
-# define W_HEIGHT 720
+# define W_WIDTH 1600
+# define W_HEIGHT 900
 # define P_WIDTH 64
 # define P_HEIGHT 64
 # define MOVE_SPEED 0.035

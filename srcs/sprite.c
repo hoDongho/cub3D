@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:29:35 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/13 16:39:37 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/18 13:07:05 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	sort_sprite(t_info *info, t_sprite *sprite)
 void	select_color(t_info *info, t_sprite *sprite, t_sprite_tool *tool)
 {
 	const int	texture_index = P_WIDTH * tool->tex_y + tool->tex_x;
-	int			texture_id;
 	const int	frame = info->frame_cnt / 10 % 4;
+	int			texture_id;
 
 	if (sprite->id == 2 && info->access_cnt + 1 == info->sprite_cnt)
 		texture_id = 9 + frame;
@@ -55,9 +55,9 @@ void	select_color(t_info *info, t_sprite *sprite, t_sprite_tool *tool)
 
 void	draw_sprite(t_info *info, t_sprite *sprite, t_sprite_tool *tool)
 {
-	int				i;
-	int				j;
-	int				d;
+	int	i;
+	int	j;
+	int	d;
 
 	i = tool->draw_start_x - 1;
 	while (++i < tool->draw_end_x)
@@ -70,9 +70,8 @@ void	draw_sprite(t_info *info, t_sprite *sprite, t_sprite_tool *tool)
 			j = tool->draw_start_y - 1;
 			while (++j < tool->draw_end_y)
 			{
-				d = (j - tool->v_move_screen) * 256 - W_HEIGHT * \
-					128 + tool->s_height * 128;
-				tool->tex_y = ((d * P_HEIGHT) / tool->s_height) / 256;
+				d = (j - tool->v_move_screen) * 2 - W_HEIGHT + tool->s_height;
+				tool->tex_y = ((d * P_HEIGHT) / tool->s_height) / 2;
 				select_color(info, sprite, tool);
 				if ((tool->color & 0x00FFFFFF) != 0)
 					info->main.addr[j * W_WIDTH + i] = tool->color;
@@ -90,10 +89,10 @@ void	init_tool(t_info *info, t_sprite *sprite, t_sprite_tool *tool)
 	tool->t_y = tool->inv_det * \
 				(-info->plane_y * tool->s_x + info->plane_x * tool->s_y);
 	tool->s_screen_x = (int)((W_WIDTH / 2) * (1 + tool->t_x / tool->t_y));
-	tool->v_move_screen = (int)(VMOVE / tool->t_y) * (2 - (int)sprite->id);
+	tool->v_move_screen = (int)(VMOVE / tool->t_y) * (2 - sprite->id);
 	tool->s_height = (int)fabs((W_HEIGHT / tool->t_y) / VDIV * sprite->id);
-	tool->draw_start_y = -tool->s_height \
-						/ 2 + W_HEIGHT / 2 + tool->v_move_screen;
+	tool->draw_start_y = -tool->s_height / 2 \
+				+ W_HEIGHT / 2 + tool->v_move_screen;
 	if (tool->draw_start_y < 0)
 		tool->draw_start_y = 0;
 	tool->draw_end_y = tool->s_height / 2 + W_HEIGHT / 2 + tool->v_move_screen;
