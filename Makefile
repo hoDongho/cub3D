@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+         #
+#    By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 15:49:02 by yehyun            #+#    #+#              #
-#    Updated: 2022/10/13 14:12:19 by yehyun           ###   ########seoul.kr   #
+#    Updated: 2022/10/19 14:53:18 by dhyun            ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,12 +51,12 @@ debug:
 clean :
 	@make clean -C $(MLXDIR)
 	@make clean -C $(LIBDIR)
-	@$(RM) $(OBJS) $(OBJS_BONUS)
+	@$(RM) $(OBJS)
 
 fclean :
 	@make clean -C $(MLXDIR)
 	@make fclean -C $(LIBDIR)
-	@$(RM) $(OBJS) $(OBJS_BONUS) $(NAME)
+	@$(RM) $(OBJS) $(NAME)
 
 re :
 	@make fclean
