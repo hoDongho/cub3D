@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:28:42 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/13 15:24:29 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/20 14:32:35 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ char	*gnl_scan(int fd, int flag)
 	char	*tmp;
 
 	tmp = get_next_line(fd);
+	if (!tmp || !tmp[0])
+	{
+		if (tmp)
+			free(tmp);
+		return (NULL);
+	}
 	if (!ft_strncmp(tmp, "\n", 2))
 	{
 		if (!flag)
@@ -69,13 +75,8 @@ char	*gnl_scan(int fd, int flag)
 		}
 		return (tmp);
 	}
-	if (!tmp || !tmp[0])
-	{
-		if (tmp)
-			free(tmp);
-		return (NULL);
-	}
-	tmp[ft_strlen(tmp) - 1] = '\0';
+	if (tmp[ft_strlen(tmp) - 1] == '\n')
+		tmp[ft_strlen(tmp) - 1] = '\0';
 	return (tmp);
 }
 
@@ -87,6 +88,8 @@ void	load_image(t_info *info, int *texture, char *path)
 
 	img.img = mlx_xpm_file_to_image(info->mlx, path,
 			&img.width, &img.height);
+	if (!img.img)
+		puterr_msg("failed to load image");
 	img.addr = (int *)mlx_get_data_addr(img.img, &img.bpp,
 			&img.line_length, &img.endian);
 	y = -1;

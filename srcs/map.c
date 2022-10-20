@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 15:49:15 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/13 15:32:54 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/20 14:35:33 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static int	check_elem(t_info *info, t_dlist *now, int i, int *flag)
 		else if (*flag)
 			return (puterr_msg("map error!"));
 	}
+	if (now->line[i] == '0' && (!now->prev->line[i] || !now->next->line[i]))
+		puterr_msg("map error!");
 	return (0);
 }
 
@@ -56,10 +58,13 @@ static int	check_up_down(char *line)
 {
 	int	i;
 
-	i = -1;
-	while (line[++i])
+	i = 0;
+	while (line[i])
+	{
 		if (line[i] != '1' && line[i] != ' ')
 			return (puterr_msg("map error!"));
+		i++;
+	}
 	return (0);
 }
 

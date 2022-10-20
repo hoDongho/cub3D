@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:38:03 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/13 15:30:25 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/20 16:39:02 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ int	find_wall(t_info *info, t_ray *ray)
 		ray->hit = find_target(info->map, ray->map_x, ray->map_y);
 	}
 	if (ray->side == 0)
-		ray->perp_wall_dist = (ray->map_x - info->p_x + (1 - ray->step_x) / 2)
-			/ ray->dir_x;
+		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
 	else
-		ray->perp_wall_dist = (ray->map_y - info->p_y + (1 - ray->step_y) / 2)
-			/ ray->dir_y;
+		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
 	return (0);
 }
 

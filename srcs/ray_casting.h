@@ -15,16 +15,16 @@
 
 typedef struct s_draw
 {
-	int		line_height;
-	int		start;
-	int		end;
-	int		tex_num;
-	int		tex_x;
-	int		tex_y;
-	int		color;
-	double	wall_x;
-	double	step;
-	double	tex_pos;
+	int				line_height;
+	int				start;
+	int				end;
+	int				tex_num;
+	int				tex_x;
+	int				tex_y;
+	double			wall_x;
+	double			step;
+	double			tex_pos;
+	unsigned int	color;
 }	t_draw;
 
 typedef struct s_ray
