@@ -6,7 +6,7 @@
 /*   By: yehyun <yehyun@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:29:35 by yehyun            #+#    #+#             */
-/*   Updated: 2022/10/18 13:07:05 by yehyun           ###   ########seoul.kr  */
+/*   Updated: 2022/10/24 17:02:28 by yehyun           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	sort_sprite(t_info *info, t_sprite *sprite)
 
 	i = -1;
 	while (++i < info->sprite_cnt)
-		sprite->distance = pow((info->p_x - sprite[i].x), 2) \
+		sprite[i].distance = pow((info->p_x - sprite[i].x), 2) \
 							+ pow((info->p_y - sprite[i].y), 2);
 	k = -1;
 	while (++k < info->sprite_cnt)
